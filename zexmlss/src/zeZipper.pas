@@ -117,7 +117,7 @@ type
     FInMemSize      : Int64;
     FTmpZipFolder   : string;
     //FCompressor     : TObject;
-    FOnPercent      : LongInt;
+    FOnPercent      : Integer;
     FOnProgress     : TProgressEvent;
     FOnEndOfFile    : TOnEndOfFileEvent;
     FOnStartFile    : TOnStartFileEvent;
@@ -176,7 +176,7 @@ type
     FFiles      : TStrings;
     //FZipStream  : TStream;     { I/O file variables                         }
 
-    FOnPercent  : LongInt;
+    FOnPercent  : Integer;
     FOnProgress : TProgressEvent;
     FOnEndOfFile : TOnEndOfFileEvent;
     FOnStartFile : TOnStartFileEvent;

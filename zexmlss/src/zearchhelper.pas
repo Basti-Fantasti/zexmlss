@@ -54,12 +54,12 @@ type
 function ZEGetTempDir(): string;
 function ZECreateUniqueTmpDir(const ADir: string; var retTmpDir: string): boolean;
 function ZEDelTree(ADir: string): boolean;
-// копирование файла
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 function ZECopyFile(const ASource, ADest: TFileName): Boolean;
 
 implementation
 
-//Получает путь к темпу
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
 function ZEGetTempDir(): string;
 begin
   {$IFDEF FPC}
@@ -69,12 +69,12 @@ begin
   {$ENDIF}
 end;
 
-//Создаёт уникальную пустую директорию в ADir
+//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ ADir
 //INPUT
-//  const ADir: string    - путь, в котором нужно создать директорию
-//  var retTmpDir: string - возвращаемый путь к временной директории
+//  const ADir: string    - пїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  var retTmpDir: string - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //RETURN
-//        boolean - true - директория успешно создана
+//        boolean - true - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 function ZECreateUniqueTmpDir(const ADir: string; var retTmpDir: string): boolean;
 var
   l: integer;
@@ -110,11 +110,11 @@ begin
     retTmpDir := retTmpDir + stime + s + PathDelim;
 end; //ZECreateUniqueTmpDir
 
-//Удаляет директорию с содержимым
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //INPUT
-//      ADir: string - имя удаляемой директории
+//      ADir: string - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //RETURN
-//      boolean - true - директория успешно удалена
+//      boolean - true - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 function ZEDelTree(ADir: string): boolean;
 
   function _DelTree(const AddDir: string): boolean;
@@ -144,16 +144,17 @@ begin
   result := _DelTree(ADir{''});
 end;
 
-// копирование файла
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 function ZECopyFile(const ASource, ADest: TFileName): Boolean;
-{$ifdef FPC}
+{$if defined(FPC) or not defined(MSWINDOWS)}
 var
   fs1, fs2: TFileStream;
-{$endif}
+{$ifend}
 begin
-  {$ifndef FPC}
+  {$ifdef MSWINDOWS}{$ifndef FPC}
   Result := Windows.CopyFile(PChar(ASource), PChar(ADest), False);
-  {$else}
+  {$endif}{$endif}
+  {$if defined(FPC) or not defined(MSWINDOWS)}
   Result := False;
   if not FileExists(ASource) then Exit;
 
@@ -171,7 +172,8 @@ begin
   finally
     fs1.Free();
   end;
-  {$endif}
+  Result := True;
+  {$ifend}
 end;
 
 { TTmpFileStream }
