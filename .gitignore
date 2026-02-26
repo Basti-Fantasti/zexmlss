@@ -24,3 +24,5 @@
 *.obj
 *.dbg
 *.pas.bak
+
+/reference
