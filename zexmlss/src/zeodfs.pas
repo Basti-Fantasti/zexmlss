@@ -4756,7 +4756,11 @@ var
         _CellData := ProcessedSheet.Cell[j, i].Data;
         //table:value-type + office:some_type_value
         //  ZENumber -> float
+        // Skip cached value attributes for formula cells with no explicit data.
+        // Writing office:value="0" for empty formula cells causes spreadsheet
+        // applications to display the cached zero instead of evaluating the formula.
         ss := '';
+        if not ((ProcessedSheet.Cell[j, i].Formula > '') and (_CellData = '')) then
         case (ProcessedSheet.Cell[j, i].CellType) of
           ZENumber:
             begin
@@ -4815,7 +4819,7 @@ var
         if (ss > '') then
           _xml.Attributes.Add('office:value-type', ss, false);
 
-        //�������  
+        //�������
         ss := ProcessedSheet.Cell[j, i].Formula;
         if (ss > '') then
           _xml.Attributes.Add('table:formula', ss, false);
