@@ -59,7 +59,7 @@ These units must only be on the search path for non-Windows targets. On Windows,
 - `zeZipper.pas` — Changed `FOnPercent` field type from `LongInt` to `Integer` (incompatible types on 64-bit Linux where `LongInt` is 64-bit)
 - `zearchhelper.pas` — Changed `{$ifndef FPC}` guard around `Windows.CopyFile` to `{$ifdef MSWINDOWS}` so the stream-based fallback is used on Delphi Linux64
 
-**Project integration example** (`.dproj`):
+**Project integration** (`.dproj`):
 
 ```xml
 <!-- Win32: add Vcl to namespace search so 'Graphics' resolves to Vcl.Graphics -->
@@ -72,6 +72,59 @@ These units must only be on the search path for non-Windows targets. On Windows,
   <DCC_UnitSearchPath>path\to\zexmlss\compat;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
 </PropertyGroup>
 ```
+
+**Usage example** (Linux64 console application):
+
+```pascal
+program OdsDemo;
+
+{$APPTYPE CONSOLE}
+
+uses
+  SysUtils, Classes, System.IOUtils,
+  zexmlss, zeodfs;  // no platform-specific units needed in your code
+
+var
+  LXMLSS: TZEXMLSS;
+  LSheet: TZSheet;
+  LOutputFile: string;
+begin
+  LXMLSS := TZEXMLSS.Create(nil);
+  try
+    LXMLSS.Sheets.Count := 1;
+    LSheet := LXMLSS.Sheets[0];
+    LSheet.Title := 'Sheet1';
+    LSheet.ColCount := 3;
+    LSheet.RowCount := 3;
+
+    // Header row with bold style
+    LXMLSS.Styles.Count := 1;
+    LXMLSS.Styles[0].Font.Style := [TFontStyle.fsBold];
+    LXMLSS.Styles[0].Font.Size := 12;
+
+    LSheet.Cell[0, 0].Data := 'Name';
+    LSheet.Cell[0, 0].CellStyle := 0;
+    LSheet.Cell[1, 0].Data := 'Value';
+    LSheet.Cell[1, 0].CellStyle := 0;
+
+    // Data rows
+    LSheet.Cell[0, 1].Data := 'Item A';
+    LSheet.Cell[1, 1].Data := '42';
+    LSheet.Cell[0, 2].Data := 'Item B';
+    LSheet.Cell[1, 2].Data := '17';
+
+    LOutputFile := TPath.Combine(TPath.GetTempPath, 'demo.ods');
+    if SaveXmlssToODFS(LXMLSS, LOutputFile) = 0 then
+      WriteLn('Created: ', LOutputFile)
+    else
+      WriteLn('Error generating ODS file');
+  finally
+    LXMLSS.Free;
+  end;
+end.
+```
+
+The compat shims handle the `Graphics` and `windows` unit resolution transparently — your application code uses the same zexmlss API on both Windows and Linux.
 
 ### Bug Fix
 
