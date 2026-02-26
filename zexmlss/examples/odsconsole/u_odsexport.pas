@@ -60,6 +60,14 @@ begin
     AXMLSS.Styles[Result].Font.Style := [];
   AXMLSS.Styles[Result].BGColor := ABGColor;
   AXMLSS.Styles[Result].CellPattern := ZPSolid;
+  AXMLSS.Styles[Result].Border.Left.LineStyle := ZEContinuous;
+  AXMLSS.Styles[Result].Border.Left.Weight := 1;
+  AXMLSS.Styles[Result].Border.Top.LineStyle := ZEContinuous;
+  AXMLSS.Styles[Result].Border.Top.Weight := 1;
+  AXMLSS.Styles[Result].Border.Right.LineStyle := ZEContinuous;
+  AXMLSS.Styles[Result].Border.Right.Weight := 1;
+  AXMLSS.Styles[Result].Border.Bottom.LineStyle := ZEContinuous;
+  AXMLSS.Styles[Result].Border.Bottom.Weight := 1;
 end;
 
 procedure InitStyles(AXMLSS: TZEXMLSS);
