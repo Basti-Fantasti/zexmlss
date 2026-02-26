@@ -51,28 +51,27 @@ uses
   zexmlss,
   zesavecommon,
   zenumberformats,        //TZEODSNumberFormatReader etc
-  zeZippy
-  {$IFDEF FPC},zipper {$ELSE}{$I odszipuses.inc}{$ENDIF};
+  {$IFDEF FPC}zipper{$ELSE}zeZipper{$ENDIF};
 
 type
   {$IFDEF ZUSE_CONDITIONAL_FORMATTING}
   TZEConditionMap = record
-    ConditionValue: string;       //Условие
-    ApplyStyleName: string;       //Применяемый стиль
-    ApplyStyleIDX: integer;       //Номер применяемого стиля
-    ApplyBaseCellAddres: string   //Адрес ячейки
+    ConditionValue: string;       //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    ApplyStyleName: string;       //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    ApplyStyleIDX: integer;       //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    ApplyBaseCellAddres: string   //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   end;
   {$ENDIF}
 
-  //Доп. свойства стиля
+  //пїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
   TZEODFStyleProperties = record
-    name: string;           //Имя стиля
+    name: string;           //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     index: integer;
-    ParentName: string;     //Имя родителя
-    isHaveParent: boolean;  //Флаг наличая родительского стиля
+    ParentName: string;     //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    isHaveParent: boolean;  //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     {$IFDEF ZUSE_CONDITIONAL_FORMATTING}
-    ConditionsCount: integer;             //Кол-во условий (признак условного форматирования)
-    Conditions: array of TZEConditionMap; //Условия
+    ConditionsCount: integer;             //пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+    Conditions: array of TZEConditionMap; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     {$ENDIF}
   end;
 
@@ -95,24 +94,24 @@ type
 
   TZEODFReadHelper = class;
 
-  //Для чтения условного форматирования в ODS
+  //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ ODS
   TZODFConditionalReadHelper = class
   private
     FXMLSS: TZEXMLSS;
-    FCountInLine: integer;            //Кол-во условных стилей в текущей линии
+    FCountInLine: integer;            //пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     FMaxCountInLine: integer;
-    FCurrentLine: array of TZEODFCFLine; //Текущая строка с условными стилями
+    FCurrentLine: array of TZEODFCFLine; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     FColumnSCFNumbers: array of array [0..1] of integer;
-    FColumnsCount: integer;           //Кол-во столбцов в листе
-    FMaxColumnsCount: integer;        //Максимальное кол-во листов
+    FColumnsCount: integer;           //пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
+    FMaxColumnsCount: integer;        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
-    FAreas: array of TZEODFCFAreaItem;//Области с условным морматированием
-    FAreasCount: integer;             //Кол-во областей с условным форматированием
+    FAreas: array of TZEODFCFAreaItem;//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    FAreasCount: integer;             //пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     FMaxAreasCount: integer;
 
-    FLineItemWidth: integer;          //Ширина текущей линии с одинаковым StyleID
-    FLineItemStartCell: integer;      //Номер начальной ячейки в строке
-    FLineItemStyleCFNumber: integer;  //Номер стиля
+    FLineItemWidth: integer;          //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ StyleID
+    FLineItemStartCell: integer;      //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    FLineItemStyleCFNumber: integer;  //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     FReadHelper: TZEODFReadHelper;
   protected
     procedure AddToLine(const CellNum: integer; const AStyleCFNumber: integer; const ACount: integer);
@@ -143,7 +142,7 @@ type
   end;
 {$ENDIF} //ZUSE_CONDITIONAL_FORMATTING read
 
-  //Условное форматирование (для записи)
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
 {$IFDEF ZUSE_CONDITIONAL_FORMATTING}
 
   TODFCFAreas = array of TZConditionalAreas;
@@ -159,24 +158,24 @@ type
   end;
 
   TODFCFWriterArray = record
-    CountCF: integer;                   //кол-во стилей
-    StyleCFID: array of TODFStyleCFID;  //номер стиля c условным форматированием
-    Areas: TODFCFAreas;                 //Области
+    CountCF: integer;                   //пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    StyleCFID: array of TODFStyleCFID;  //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ c пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    Areas: TODFCFAreas;                 //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   end;
 
-  //Помошник для записи условного форматирования
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   TZODFConditionalWriteHelper = class
   private
-    FPagesCount: integer;                 //кол-во страниц
+    FPagesCount: integer;                 //пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     FPageIndex: TIntegerDynArray;
     FPageNames: TStringDynArray;
     FPageCF: array of TODFCFWriterArray;
     FFirstCFIdInPage: TIntegerDynArray;
     FXMLSS: TZEXMLSS;
-    FStylesCount: integer;                //кол-во стилей (которые с style:map)
-    FApplyCFStylesCount: integer;         //кол-во стилей ConditionalStyle_f (в styles.xml)
+    FStylesCount: integer;                //пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ style:map)
+    FApplyCFStylesCount: integer;         //пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ ConditionalStyle_f (пїЅ styles.xml)
     FMaxApplyCFStylesCount: integer;
-    FApplyCFStyles: array of integer;     //массив с применяемымы стилями
+    FApplyCFStyles: array of integer;     //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   protected
     function GetBaseCellAddr(const StCondition: TZConditionalStyleItem;
                              const CurrPageName: string): string;
@@ -198,7 +197,7 @@ type
 
 {$ENDIF} //ZUSE_CONDITIONAL_FORMATTING write
 
-  //предок для помошников чтения/записи
+  //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅ
   TZEODFReadWriteHelperParent = class
   private
     FXMLSS: TZEXMLSS;
@@ -220,11 +219,11 @@ type
                           ZEODSMediaTypeUnknown
                           );
 
-  //Для чтения стилей и всего такого
+  //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   TZEODFReadHelper = class(TZEODFReadWriteHelperParent)
   private
-    FStylesCount: integer;                  //Кол-во стилей
-    FStyles: array of TZStyle;              //Стили из styles.xml
+    FStylesCount: integer;                  //пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    FStyles: array of TZStyle;              //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ styles.xml
     FMasterPagesCount: integer;
     FMasterPages: array of TZSheetOptions;  //Array of master pages
     FMasterPagesNames: array of string;
@@ -233,7 +232,7 @@ type
     FPageLayoutsNames: array of string;
 
     {$IFDEF ZUSE_CONDITIONAL_FORMATTING}
-    FConditionReader: TZODFConditionalReadHelper; //Для чтения условного форматирования
+    FConditionReader: TZODFConditionalReadHelper; //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     {$ENDIF}
     FNumberStylesHelper: TZEODSNumberFormatReader;
     function GetStyle(num: integer): TZStyle;
@@ -255,7 +254,7 @@ type
     property NumberStylesHelper: TZEODSNumberFormatReader read FNumberStylesHelper;
   end;
 
-  //Для записи (пока нужно только условное форматирование)
+  //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
   TZEODFWriteHelper = class(TZEODFReadWriteHelperParent)
   private
     {$IFDEF ZUSE_CONDITIONAL_FORMATTING}
@@ -290,63 +289,55 @@ type
     property NumberFormatWriter: TZEODSNumberFormatWriter read FNumberFormatWriter;
   end;
 
-//Сохраняет незапакованный документ в формате Open Document
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Open Document
 function SaveXmlssToODFSPath(var XMLSS: TZEXMLSS; PathName: string; const SheetsNumbers: array of integer;
                          const SheetsNames: array of string; TextConverter: TAnsiToCPConverter; CodePageName: string; BOM: ansistring = ''): integer; overload;
-//Сохраняет незапакованный документ в формате Open Document
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Open Document
 function SaveXmlssToODFSPath(var XMLSS: TZEXMLSS; PathName: string; const SheetsNumbers: array of integer;
                          const SheetsNames: array of string): integer; overload;
-//Сохраняет незапакованный документ в формате Open Document
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Open Document
 function SaveXmlssToODFSPath(var XMLSS: TZEXMLSS; PathName: string): integer; overload;
 
-{$IFDEF FPC}
 function SaveXmlssToODFS(var XMLSS: TZEXMLSS; FileName: string; const SheetsNumbers: array of integer;
                          const SheetsNames: array of string; TextConverter: TAnsiToCPConverter; CodePageName: string; BOM: ansistring = ''): integer; overload;
 function SaveXmlssToODFS(var XMLSS: TZEXMLSS; FileName: string; const SheetsNumbers: array of integer;
                          const SheetsNames: array of string): integer; overload;
 function SaveXmlssToODFS(var XMLSS: TZEXMLSS; FileName: string): integer; overload;
-{$ENDIF}
 
 function ExportXmlssToODFS(var XMLSS: TZEXMLSS; FileName: string; const SheetsNumbers: array of integer;
                            const SheetsNames: array of string; TextConverter: TAnsiToCPConverter; CodePageName: String;
                            BOM: ansistring = '';
-                           AllowUnzippedFolder: boolean = false; ZipGenerator: CZxZipGens = nil): integer; overload;
+                           AllowUnzippedFolder: boolean = false): integer; overload;
 
 
 function ReadODFSPath(var XMLSS: TZEXMLSS; DirName: string): integer;
 
-{$IFDEF FPC}
 function ReadODFS(var XMLSS: TZEXMLSS; FileName: string): integer;
-{$ENDIF}
 
-{$IFNDEF FPC}
-{$I odszipfunc.inc}
-{$ENDIF}
-
-//////////////////// Дополнительные функции, если понадобится читать/писать отдельные файлы или ещё для чего
-{для записи}
-//Записывает в поток стили документа (styles.xml)
+//////////////////// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+{пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ}
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (styles.xml)
 function ODFCreateStyles(var XMLSS: TZEXMLSS; Stream: TStream; const _pages: TIntegerDynArray;
                           const _names: TStringDynArray; PageCount: integer; TextConverter: TAnsiToCPConverter; CodePageName: String; BOM: ansistring;
                           const WriteHelper: TZEODFWriteHelper): integer;
 
-//Записывает в поток настройки (settings.xml)
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (settings.xml)
 function ODFCreateSettings(var XMLSS: TZEXMLSS; Stream: TStream; const _pages: TIntegerDynArray;
                           const _names: TStringDynArray; PageCount: integer; TextConverter: TAnsiToCPConverter; CodePageName: String; BOM: ansistring): integer;
 
-//Записывает в поток документ + автоматические стили (content.xml)
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (content.xml)
 function ODFCreateContent(var XMLSS: TZEXMLSS; Stream: TStream; const _pages: TIntegerDynArray;
                           const _names: TStringDynArray; PageCount: integer; TextConverter: TAnsiToCPConverter; CodePageName: String; BOM: ansistring;
                           const WriteHelper: TZEODFWriteHelper): integer;
 
-//Записывает в поток метаинформацию (meta.xml)
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (meta.xml)
 function ODFCreateMeta(var XMLSS: TZEXMLSS; Stream: TStream; TextConverter: TAnsiToCPConverter; CodePageName: string; BOM: ansistring): integer;
 
-{для чтения}
-//Чтение содержимого документа ODS (content.xml)
+{пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ}
+//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ODS (content.xml)
 function ReadODFContent(var XMLSS: TZEXMLSS; stream: TStream; var ReadHelper: TZEODFReadHelper): boolean;
 
-//Чтение настроек документа ODS (settings.xml)
+//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ODS (settings.xml)
 function ReadODFSettings(var XMLSS: TZEXMLSS; stream: TStream): boolean;
 
 function GetODSMediaTypeByStr(const MediaType: string): TODSManifestMediaType;
@@ -357,7 +348,7 @@ implementation
 
 uses
    StrUtils
-   {$IFDEF ZUSE_CONDITIONAL_FORMATTING}, zeformula {$ENDIF} //пока формулы нужны только для условного форматирования
+   {$IFDEF ZUSE_CONDITIONAL_FORMATTING}, zeformula {$ENDIF} //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
    ;
 
 const
@@ -503,9 +494,9 @@ const
 
 type
   TZODFColumnStyle = record
-    name: string;     //имя стиля строки
-    width: real;      //ширина
-    breaked: boolean; //разрыв
+    name: string;     //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    width: real;      //пїЅпїЅпїЅпїЅпїЅпїЅ
+    breaked: boolean; //пїЅпїЅпїЅпїЅпїЅпїЅ
     AutoWidth: boolean; //Optimal width
   end;
 
@@ -530,11 +521,10 @@ type
 
   TZODFTableArray = array of TZODFTableStyle;
 
-{$IFDEF FPC}
   function ReadODFStyles(var XMLSS: TZEXMLSS; stream: TStream; var ReadHelper: TZEODFReadHelper): boolean; forward;
 
 type
-  //Для распаковки в поток
+  //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
   TODFZipHelper = class
   private
     FXMLSS: TZEXMLSS;
@@ -605,8 +595,6 @@ begin
   end;
 end; //DoDoneOutZipStream
 
-{$ENDIF}
-
 //Convert double to string for ODF sizes (like 23.95cm etc)
 //INPUT
 //      AValue: double
@@ -627,12 +615,12 @@ function GetBGColorForODS(const value: string): TColor; forward;
 
 ////::::::::::::: TZODFConditionalWriteHelper :::::::::::::::::////
 
-//конструктор
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //INPUT
-//      ZEXMLSS: TZEXMLSS           - хранилище
-//  const _pages: TIntegerDynArray  - индексы страниц
-//  const _names: TStringDynArray   - названия страниц
-//      PageCount: integer          - кол-во страниц
+//      ZEXMLSS: TZEXMLSS           - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  const _pages: TIntegerDynArray  - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  const _names: TStringDynArray   - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      PageCount: integer          - пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 constructor TZODFConditionalWriteHelper.Create(ZEXMLSS: TZEXMLSS;
                                                const _pages: TIntegerDynArray;
                                                const _names: TStringDynArray;
@@ -691,7 +679,7 @@ begin
   inherited
 end; //Destroy
 
-//Получить текст оператора
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 function TZODFConditionalWriteHelper.ODSGetOperatorStr(AOperator: TZConditionalOperator): string;
 begin
   case (AOperator) of
@@ -708,10 +696,10 @@ end; //ODSGetOperatorStr
 
 //style:base-cell-address / calcext:base-cell-address
 //INPUT
-//  const StCondition: TZConditionalStyleItem - условие
-//  const CurrPageName: string                - название листа по дефолту
+//  const StCondition: TZConditionalStyleItem - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  const CurrPageName: string                - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //RETURN
-//      string - текст базовой ячейки
+//      string - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 function TZODFConditionalWriteHelper.GetBaseCellAddr(const StCondition: TZConditionalStyleItem;
                                                      const CurrPageName: string): string;
 var
@@ -764,7 +752,7 @@ begin
   end;
 end; //AddBetweenCond
 
-//Получить применяемый стиль для условного форматирования по индексу
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 function TZODFConditionalWriteHelper.GetApplyCFStyle(AStyleIndex: integer): integer;
 var
   i: integer;
@@ -779,13 +767,13 @@ begin
     end;
 end; //GetApplyCfStyle
 
-//Добавить в массив FApplyCFStyles (уникальные CF в styles.xml) стиль
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ FApplyCFStyles (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ CF пїЅ styles.xml) пїЅпїЅпїЅпїЅпїЅ
 //INPUT
-//      AStyleIndex: integer  - применяемый стиль
-//  out retCFIndex: integer   - возвращаемый индекс условного стиля в styles.xml
+//      AStyleIndex: integer  - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+//  out retCFIndex: integer   - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ styles.xml
 //                              (ConditionalStyle_f + IntToStr(retCFIndex))
 //RETURN
-//      boolean - true - стиль успешно добавился, можно писать в xml
+//      boolean - true - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ xml
 function TZODFConditionalWriteHelper.TryAddApplyCFStyle(AStyleIndex: integer; out retCFIndex: integer): boolean;
 var
   i: integer;
@@ -813,10 +801,10 @@ begin
   end;
 end; //AddApplyCFStyle
 
-//Запись стилей с условным форматированием в content.xml
-// (тэги <style:style ...>...<style:map .../>...</style:style>)
+//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ content.xml
+// (пїЅпїЅпїЅпїЅ <style:style ...>...<style:map .../>...</style:style>)
 //INPUT
-//      xml: TZsspXMLWriterH - куда записывать
+//      xml: TZsspXMLWriterH - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 procedure TZODFConditionalWriteHelper.WriteCFStyles(xml: TZsspXMLWriterH);
 var
   i, j: integer;
@@ -840,11 +828,11 @@ var
   CFMapsCount: integer;
   CFMapsMaxCount: integer;
 
-  //Добавить условие
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   //INPUT
-  //      mapnum: integer - номер условия
+  //      mapnum: integer - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   //RETURN
-  //      boolean - true - условие адекватное, добавляем
+  //      boolean - true - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   function _AddMapCondition(mapnum: integer): boolean;
 
     function _AddContentOperator(): boolean;
@@ -854,7 +842,7 @@ var
       if (b) then
         s := ZEFloatSeparator(FormatFloat('', d1))
       else
-        //TODO: на случай, если ввели v1 с кавычками, нужно будет потом сделать проверку
+        //TODO: пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ v1 пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         s := '''' + v1 + '''';
       s := 'cell-content()' + ODSGetOperatorStr(_StCondition.ConditionOperator) + s;
     end; //_AddContentOperator()
@@ -862,7 +850,7 @@ var
     function _AddIsFormula(): boolean;
     begin
       result := false;
-      //TODO: добавить проверку на валидность формулы!!!
+      //TODO: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ!!!
       if (length(v1) > 0) then
       begin
         s := 'is-true-formula(' + v1 + ')';
@@ -920,7 +908,7 @@ var
         brd := 0;
   end; //_CheckBorders
 
-  //Получает все стили из области с условным форматированием
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   procedure _GetAreasStyles();
   var
     i, j, k: integer;
@@ -971,23 +959,23 @@ var
     end; // for i
   end; //_GetAreasStyles
 
-  //Добавить стиль условного форматирования
-  //  (текущий итем условного форматирования берётся из _CFStyle)
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  //  (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ _CFStyle)
   //INPUT
-  //      idx: integer - "индекс" страницы
+  //      idx: integer - "пїЅпїЅпїЅпїЅпїЅпїЅ" пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   procedure _AddCFStyle(idx: integer);
   var
     i, j: integer;
-    _addedCount: integer; //кол-во добавленных условий
+    _addedCount: integer; //пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
   begin
     _addedCount := 0;
     CFMapsCount := 0;
-    //добавляем стиль для условного форматирования
-    //  обычно будет максимум 1-2 условное форматирование,
-    //    поэтому пока не паримся насчёт SetLength.
-    //  TODO: если в будущем понадобится добавлять большое кол-во
-    //        условных форматирований, то нужно будет чуть оптимизировать.
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    //  пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 1-2 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ,
+    //    пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ SetLength.
+    //  TODO: пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ
+    //        пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
     inc(FPageCF[idx].CountCF);
     _kol := FPageCF[idx].CountCF;
     SetLength(FPageCF[idx].StyleCFID, _kol);
@@ -1032,7 +1020,7 @@ var
       end; //for i
     end else
     begin
-      //уменьшаем кол-во стилей
+      //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
       dec(FPageCF[idx].CountCF);
     end;
   end; //_AddCFStyle
@@ -1078,11 +1066,11 @@ begin
   end;
 end; //WriteCFStyles
 
-//Пишет условное форматирование <calcext:conditional-formats> </calcext:conditional-formats>
-// для LibreOffice
+//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ <calcext:conditional-formats> </calcext:conditional-formats>
+// пїЅпїЅпїЅ LibreOffice
 //INPUT
-//      xml: TZsspXMLWriterH  - писатель
-//      PageIndex: integer    - номер страницы
+//      xml: TZsspXMLWriterH  - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      PageIndex: integer    - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 procedure TZODFConditionalWriteHelper.WriteCalcextCF(xml: TZsspXMLWriterH; PageIndex: integer);
 var
   i: integer;
@@ -1163,7 +1151,7 @@ var
 
       function _GetIsTrueFormula(out retCondition: string): boolean;
       begin
-        //TODO: добавить проверку на валидность формулы!
+        //TODO: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ!
         if (Length(StyleItem.Value1) > 0) then
         begin
           result := true;
@@ -1283,15 +1271,15 @@ begin
   end;
 end; //WriteCalcextCF
 
-//Получить номер стиля (с условным форматированием или без) ячейки
-//  подразумевается, что индекс страницы и координаты ячейки правильные и
-//  не выходят за границы.
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ) пїЅпїЅпїЅпїЅпїЅпїЅ
+//  пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ
+//  пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
 //INPUT
-//  const PageIndex: integer  - индекс страницы
-//  const Col: integer        - номер столбца
-//  const Row: integer        - номер строки
+//  const PageIndex: integer  - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  const Col: integer        - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  const Row: integer        - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 //RETURN
-//      integer - номер стиля (-1 - стиль по умолчанию)
+//      integer - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (-1 - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 function TZODFConditionalWriteHelper.GetStyleNum(const PageIndex, Col, Row: integer): integer;
 var
   i, j: integer;
@@ -1339,11 +1327,11 @@ begin
   inherited;
 end;
 
-//Проверить условный стиль для текущей ячейки и заполить линию условных стилей
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 //INPUT
-//      CellNum: integer        - номер текущей ячейки
-//      AStyleCFNumber: integer - номер условного стиля ячейки (из массивов)
-//      RepeatCount: integer    - кол-во повторений
+//      CellNum: integer        - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//      AStyleCFNumber: integer - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+//      RepeatCount: integer    - пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 procedure TZODFConditionalReadHelper.CheckCell(CellNum: integer; AStyleCFNumber: integer; RepeatCount: integer = 1);
 var
   _add: boolean;
@@ -1360,10 +1348,10 @@ var
   end;
 
 begin
-  //Если первая ячейка в строке или если предыдущий стиль был не условным
+  //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   if (FLineItemStartCell < 0) then
   begin
-    //стиль должен быть только условным
+    //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     _AddLineItem();
   end else
   begin
@@ -1381,11 +1369,11 @@ begin
   end;
 end; //CheckCell
 
-//Добавить к текущей линии
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 //INPUT
-//  const CellNum: integer        - номер начальной ячейки
-//  const AStyleCFNumber: integer - номер стиля в хранилище
-//  const ACount: integer         - кол-во ячеек
+//  const CellNum: integer        - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//  const AStyleCFNumber: integer - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  const ACount: integer         - пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 procedure TZODFConditionalReadHelper.AddToLine(const CellNum: integer; const AStyleCFNumber: integer; const ACount: integer);
 var
   t: integer;
@@ -1403,7 +1391,7 @@ begin
   FCurrentLine[t].Count := ACount;
 end; //AddToLine
 
-//Получить из текста условия (style:condition) уловие, оператор и значения
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (style:condition) пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //INPUT
 //  const ConditionalValue: string
 //  out Condition: TZCondition
@@ -1411,7 +1399,7 @@ end; //AddToLine
 //  out Value1: string
 //  out Value2: string
 //RETURN
-//      boolean - true - уловие успешно определено
+//      boolean - true - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 function TZODFConditionalReadHelper.ODFReadGetConditional(const ConditionalValue: string;
                                 out Condition: TZCondition;
                                 out ConditionOperator: TZConditionalOperator;
@@ -1428,11 +1416,11 @@ var
   _maxKol: integer;
   _isFirstOperator: boolean;
 
-  //Заполняет строку retStr до тех пор, пока не встретит символ=ch или не дойдёт до конца
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ retStr пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ=ch пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
   //INPUT
-  //  var retStr: string  - результирующая строка
-  //  var num: integer    - позиция текущего символа в исходной строке
-  //      ch: char        - до кокого символа просматривать
+  //  var retStr: string  - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+  //  var num: integer    - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+  //      ch: char        - пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   procedure _ReadWhileNotChar(var retStr: string; var num: integer; ch: char);
   begin
     while (num < len - 1) do
@@ -1460,12 +1448,12 @@ var
     end;
   end; //_ProcessBeforeDelimiter
 
-  //Определить оператор (для ODF)
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ ODF)
   //INPUT
-  //  const st: string                             - текст оператора
-  //  var ConditionOperator: TZConditionalOperator - возвращаемый оператор
+  //  const st: string                             - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  //  var ConditionOperator: TZConditionalOperator - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   //RETURN
-  //      boolean - true - оператор успешно определён
+  //      boolean - true - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   function ODFGetOperatorByStr(const st: string; var ConditionOperator: TZConditionalOperator): boolean;
   begin
     result := true;
@@ -1490,7 +1478,7 @@ var
       result := false;
   end; //ODFGetOperatorByStr
 
-  //Определение условия
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   function _CheckCondition(): boolean;
   var
     v1, v2: double;
@@ -1530,7 +1518,7 @@ var
       if (kol >= 2) then
         if (_strArr[1] <> '') then
         begin
-          //TODO: потом проверить, нужно ли убирать кавычки и всё такое
+          //TODO: пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
           result := true;
           Condition := val;
           Value1 := _strArr[1];
@@ -1566,7 +1554,7 @@ var
       _f, _l: integer;
 
     begin
-      //Будем считать, что при чтении формула всегда валидная
+      //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
       _f := 0;
       _l := 0;
       result := true;
@@ -1591,14 +1579,14 @@ var
     result := false;
     s := _strArr[0];
 
-    //TODO: не забыть добавить все остальные условия
-    //Для условных стилей из ODF (без расширения в LibreOffice):
+    //TODO: пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ ODF (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ LibreOffice):
     //  cell-content-is-between
     //  cell-content-is-not-between
     //  cell-content
     //  value
     //
-    //Для LibreOffice (<calcext:conditional-formats>):
+    //пїЅпїЅпїЅ LibreOffice (<calcext:conditional-formats>):
     //  between()
     //  not-between()
     //  begins-with()
@@ -1688,10 +1676,10 @@ var
       result := _CheckFormula();
   end; //_CheckCondition
 
-  //Читает оператор
+  //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   //INPUT
-  //  var retStr: string  - результирующая строка
-  //  var num: integer    - позиция текущего символа в исходной строке
+  //  var retStr: string  - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+  //  var num: integer    - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   procedure _ReadOperator(var retStr: string; var num: integer);
   var
     ch: char;
@@ -1724,8 +1712,8 @@ begin
   len := length(ConditionalValue);
   _isFirstOperator := false;
 
-  //TODO: нужно потом на досуге подумать более приличный способ разбора формул
-  //      (перевести в обратную польскую запись и всё такое)
+  //TODO: пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+  //      (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ)
   {
   is-true-formula()                             (??)
   cell-content-is-between(value1, value2)
@@ -1805,28 +1793,28 @@ begin
   end; //if
 end; //ODFReadGetConditional
 
-//Применить условные форматирования к листу
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
 //INPUT
-//      SheetNumber: integer            - номер листа
-//  var DefStylesArray: TZODFStyleArray - массив со стилями (Styles.xml)
-//      DefStylesCount: integer         - кол-во стилей в массиве
-//  var StylesArray: TZODFStyleArray    - массив со стилями (основной из content)
-//      StylesCount: integer            - кол-во стилей в массиве
+//      SheetNumber: integer            - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+//  var DefStylesArray: TZODFStyleArray - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (Styles.xml)
+//      DefStylesCount: integer         - пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  var StylesArray: TZODFStyleArray    - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ content)
+//      StylesCount: integer            - пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 procedure TZODFConditionalReadHelper.ApplyConditionStylesToSheet(SheetNumber: integer;
                                                      var DefStylesArray: TZODFStyleArray; DefStylesCount: integer;
                                                      var StylesArray: TZODFStyleArray; StylesCount: integer);
 var
   i, j: integer;
-  _CFCount: integer;            //сколько нужно добавить условных стилей
+  _CFCount: integer;            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   _CFArray: array of integer;
   t: integer;
   _StartIDX: integer;
   _CF: TZConditionalFormatting;
 
-  //заменить в условных стилях индексы на нужный
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   //INPUT
-  //  const StyleName: string - имя стиля
-  //      StyleIndex: integer - номер стиля в хранилище
+  //  const StyleName: string - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+  //      StyleIndex: integer - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   procedure _ApplyCFDefIndexes(const StyleName: string; StyleIndex: integer);
   var
     i, j: integer;
@@ -1844,10 +1832,10 @@ var
             StylesArray[i].Conditions[j].ApplyStyleIDX := StyleIndex
   end; //_ApplyCFDefIndexes
 
-  //Добавить условное форматирование в документ
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   //INPUT
-  //      CFStyle: TZConditionalStyle       - добавляемый условный стиль
-  //  var StyleItem: TZEODFStyleProperties  - свойства стилей
+  //      CFStyle: TZConditionalStyle       - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+  //  var StyleItem: TZEODFStyleProperties  - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   procedure _AddCFItem(CFStyle: TZConditionalStyle; var StyleItem: TZEODFStyleProperties);
   var
     i, j: integer;
@@ -1869,7 +1857,7 @@ var
         if (StyleItem.Conditions[i].ApplyStyleIDX < 0) then
         begin
           b := false;
-          //Проверка по styles.xml
+          //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ styles.xml
           for j := 0 to DefStylesCount - 1 do
             if (StyleItem.Conditions[i].ApplyStyleName = DefStylesArray[j].name) then
             begin
@@ -1883,7 +1871,7 @@ var
               StyleItem.Conditions[i].ApplyStyleIDX := DefStylesArray[j].index;
               break;
             end; //if
-          //Проверка по стилям из content.xml
+          //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ content.xml
           if (not b) then
           for j := 0 to StylesCount - 1 do
             if (StyleItem.Conditions[i].ApplyStyleName = StylesArray[j].name) then
@@ -1955,10 +1943,10 @@ var
     end; //for i
   end; //_CheckAreas
 
-  //Добавить новую область к условному форматированию в хранилище
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   //INPUT
-  //      AreaNumber: integer   - номер области условного форматирования на текущем листе
-  //      NewCFNumber: integer  - номер существующего условного форматирования в хранилище
+  //      AreaNumber: integer   - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+  //      NewCFNumber: integer  - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   procedure _AddArea(AreaNumber: integer; NewCFNumber: integer);
   begin
     _cf.Items[NewCFNumber].Areas.Add(FAreas[AreaNumber].ColNum,
@@ -1970,7 +1958,7 @@ var
 begin
   if (FAreasCount > 0) then
     if (Assigned(FXMLSS)) then
-      //если уже есть условное форматирование, то дополнительно не добавляем
+      //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
       if (FXMLSS.Sheets[SheetNumber].ConditionalFormatting.Count = 0) then
       try
         _CheckAreas();
@@ -1986,7 +1974,7 @@ begin
       end;
 end; //ApplyConditionStylesToSheet
 
-//Очистка всех условных форматирований (выполняется перед началом нового листа)
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ)
 procedure TZODFConditionalReadHelper.Clear();
 begin
   ClearLine();
@@ -1998,14 +1986,14 @@ procedure TZODFConditionalReadHelper.ClearLine();
 begin
   FCountInLine := 0;
   FLineItemWidth := 0;
-  FLineItemStartCell := -2; //Если < 0 - значит это первый раз в строке
+  FLineItemStartCell := -2; //пїЅпїЅпїЅпїЅ < 0 - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   FLineItemStyleCFNumber := 0;
 end; //ClearLine
 
-//Добавить текущую строку с условными стилями в список условных стилей текущей страницы
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //INPUT
-//      RowNumber: integer    - текущая строка
-//      RepeatCount: integer  - кол-во повторов строки
+//      RowNumber: integer    - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//      RepeatCount: integer  - пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 procedure TZODFConditionalReadHelper.ProgressLine(RowNumber: integer; RepeatCount: integer = 1);
 var
   b: boolean;
@@ -2052,11 +2040,11 @@ begin
   end;
 end; //ProgressLine
 
-//Применить адрес базовой ячейки
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 //INPUT
-//  const BaseCellTxt: string         - текст базовой ячейки
-//  const ACFStyle: TZConditionalStyle  - условный стиль
-//      PageNum: integer              - номер текущей страницы
+//  const BaseCellTxt: string         - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//  const ACFStyle: TZConditionalStyle  - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+//      PageNum: integer              - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 procedure TZODFConditionalReadHelper.ApplyBaseCellAddr(const BaseCellTxt: string; const ACFStyle: TZConditionalStyleItem; PageNum: integer);
 var
   i: integer;
@@ -2108,11 +2096,11 @@ begin
   end;
 end; //ApplyBaseCellAddr
 
-//Читает <calcext:conditional-formats> .. </calcext:conditional-formats> - условное
-//  форатирование для LibreOffice
+//пїЅпїЅпїЅпїЅпїЅпїЅ <calcext:conditional-formats> .. </calcext:conditional-formats> - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ LibreOffice
 //INPUT
-//  var xml: TZsspXMLReaderH  - читатель (<> nil !!!)
-//      SheetNum: integer     - номер страницы
+//  var xml: TZsspXMLReaderH  - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (<> nil !!!)
+//      SheetNum: integer     - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 procedure TZODFConditionalReadHelper.ReadCalcextTag(var xml: TZsspXMLReaderH; SheetNum: integer);
 var
   _isCFItem: boolean;
@@ -2275,12 +2263,12 @@ begin
   _isCFItem := false;
   _CF := FXMLSS.Sheets[SheetNum].ConditionalFormatting;
   (*
-   <calcext:conditional-format calcext:target-range-address="Лист1.A1:Лист1.D17 Лист1.E1:Лист1.F17">
-      <calcext:condition calcext:apply-style-name="Безымянный1" calcext:value="begins-with(&quot;as&quot;)" calcext:base-cell-address="Лист1.A1"/>
-      <calcext:condition calcext:apply-style-name="Безымянный2" calcext:value="ends-with(&quot;ey&quot;)" calcext:base-cell-address="Лист1.A1"/>
-      <calcext:condition calcext:apply-style-name="Безымянный3" calcext:value="contains-text(&quot;et&quot;)" calcext:base-cell-address="Лист1.A1"/>
-      <calcext:condition calcext:apply-style-name="Безымянный4" calcext:value="not-contains-text(&quot;rt&quot;)" calcext:base-cell-address="Лист1.A1"/>
-      <calcext:condition calcext:apply-style-name="Безымянный5" calcext:value="between(1,20)" calcext:base-cell-address="Лист1.A1"/>
+   <calcext:conditional-format calcext:target-range-address="пїЅпїЅпїЅпїЅ1.A1:пїЅпїЅпїЅпїЅ1.D17 пїЅпїЅпїЅпїЅ1.E1:пїЅпїЅпїЅпїЅ1.F17">
+      <calcext:condition calcext:apply-style-name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ1" calcext:value="begins-with(&quot;as&quot;)" calcext:base-cell-address="пїЅпїЅпїЅпїЅ1.A1"/>
+      <calcext:condition calcext:apply-style-name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ2" calcext:value="ends-with(&quot;ey&quot;)" calcext:base-cell-address="пїЅпїЅпїЅпїЅ1.A1"/>
+      <calcext:condition calcext:apply-style-name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ3" calcext:value="contains-text(&quot;et&quot;)" calcext:base-cell-address="пїЅпїЅпїЅпїЅ1.A1"/>
+      <calcext:condition calcext:apply-style-name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ4" calcext:value="not-contains-text(&quot;rt&quot;)" calcext:base-cell-address="пїЅпїЅпїЅпїЅ1.A1"/>
+      <calcext:condition calcext:apply-style-name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ5" calcext:value="between(1,20)" calcext:base-cell-address="пїЅпїЅпїЅпїЅ1.A1"/>
    </calcext:conditional-format>
   *)
   _CFItem := TZConditionalStyle.Create();
@@ -2304,8 +2292,8 @@ begin
             if (_CFItem.Count > 0) then
             begin
               b := true;
-              //TODO: потом переделать сравнение условных форматирований
-              //      (пересечение областей и др.)
+              //TODO: пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+              //      (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ.)
               for i := 0 to _CF.Count - 1 do
                 if (_CF[i].IsEqual(_CFItem)) then
                 begin
@@ -2329,10 +2317,10 @@ begin
   end;
 end; //ReadCalcextTag
 
-//Добавить для указанного столбца индекс условного форматирования
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //INPUT
-//      ColumnNumber: integer   - номер столбца
-//      StyleCFNumber: integer  - номер условного стиля (в массиве)
+//      ColumnNumber: integer   - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      StyleCFNumber: integer  - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 procedure TZODFConditionalReadHelper.AddColumnCF(ColumnNumber: integer; StyleCFNumber: integer);
 var
   t: integer;
@@ -2349,12 +2337,12 @@ begin
   FColumnSCFNumbers[t][1] := StyleCFNumber;
 end;  //AddColumnCF
 
-//Получить номер стиля условного форматирования для колонки
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //INPUT
-//      ColumnNumber: integer - номер столбца
+//      ColumnNumber: integer - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //RETURN
-//      integer - >= 0 - номер стиля условного форматирования в массиве
-//                < 0 - для данного столбца не применялся условный стиль по дефолту
+//      integer - >= 0 - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//                < 0 - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 function TZODFConditionalReadHelper.GetColumnCF(ColumnNumber: integer): integer;
 var
   i: integer;
@@ -2371,7 +2359,7 @@ end; //GetColumnCF
 
 {$ENDIF} //ZUSE_CONDITIONAL_FORMATTING
 
-//Очистка доп. свойств стиля
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 procedure ODFClearStyleProperties(var StyleProperties: TZEODFStyleProperties);
 begin
   StyleProperties.name := '';
@@ -3378,7 +3366,7 @@ begin
     end;
 end; //WriteStylesMasterPages
 
-//BooleanToStr для ODF //TODO: потом заменить
+//BooleanToStr пїЅпїЅпїЅ ODF //TODO: пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 function ODFBoolToStr(value: boolean): string;
 begin
   if (value) then
@@ -3387,7 +3375,7 @@ begin
     result := 'false';
 end;
 
-//Переводит тип значения ODF в нужный
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ODF пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 function ODFTypeToZCellType(const value: string): TZCellType;
 var
   s: string;
@@ -3419,7 +3407,7 @@ begin
 end; //ODFTypeToZCellType
 
 
-//Добавляет атрибуты для тэга office:document-content
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ office:document-content
 procedure GenODContentAttr(Attr: TZAttributesH);
 begin
   Attr.Add('xmlns:office', 'urn:oasis:names:tc:opendocument:xmlns:office:1.0', false);
@@ -3461,7 +3449,7 @@ begin
   Attr.Add('office:version', '1.2', false);
 end; //GenODContentAttr
 
-//добавляет атрибуты для тэга office:document-meta
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ office:document-meta
 procedure GenODMetaAttr(Attr: TZAttributesH);
 begin
   Attr.Add('xmlns:office', 'urn:oasis:names:tc:opendocument:xmlns:office:1.0', false);
@@ -3473,7 +3461,7 @@ begin
   Attr.Add('office:version', '1.2', false);
 end; //GenODMetaAttr
 
-//добавляет атрибуты для тэга office:document-styles (styles.xml)
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ office:document-styles (styles.xml)
 procedure GenODStylesAttr(Attr: TZAttributesH);
 begin
   Attr.Add('xmlns:office', 'urn:oasis:names:tc:opendocument:xmlns:office:1.0');
@@ -3585,12 +3573,12 @@ begin
   end;
 end; //WriteFontFaceDecls
 
-//Получит нужный цвет для цвета фона
-//TODO: нужно будет восстанавливать цвет по названию
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+//TODO: пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //INPUT
-//  const value: string - цвет фона
+//  const value: string - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 //RETURN
-//      TColor - цвет фона (clwindow = transparent)
+//      TColor - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (clwindow = transparent)
 function GetBGColorForODS(const value: string): TColor;
 var
   l: integer;
@@ -3605,13 +3593,13 @@ begin
     begin
       if (value = 'transparent') then
         result := clWindow
-      //добавить нужные цвета
+      //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     end;
 end; //GetBGColorForODS
 
-//Переводит стиль границы в строку для ODF
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ ODF
 //INPUT
-//      BStyle: TZBorderStyle - стиль границы
+//      BStyle: TZBorderStyle - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 function ZEODFBorderStyleTostr(BStyle: TZBorderStyle): string;
 var
   s: string;
@@ -3620,7 +3608,7 @@ begin
   result := '';
   if (Assigned(BStyle)) then
   begin
-    //не забыть потом толщину подправить {tut}
+    //пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ {tut}
     case (BStyle.Weight) of
       0: result := '0pt';
       1: result := '0.26pt';
@@ -3644,10 +3632,10 @@ begin
   end;
 end; //ZEODFBorderStyleTostr
 
-//Выдирает из строки параметры стиля границы
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //INPUT
-//  const st: string          - строка с параметрами
-//  BStyle: TZBorderStyle - стиль границы
+//  const st: string          - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  BStyle: TZBorderStyle - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 procedure ZEStrToODFBorderStyle(const st: string; BStyle: TZBorderStyle);
 var
   i: integer;
@@ -3663,7 +3651,7 @@ var
       {$IFDEF DELPHI_UNICODE}
       if (CharInSet(s[1], ['0'..'9'])) then
       {$ELSE}
-      if (s[1] in ['0'..'9']) then //толщина
+      if (s[1] in ['0'..'9']) then //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
       {$ENDIF}
       begin
         if (s = '0pt') then
@@ -3712,12 +3700,12 @@ begin
   end;
 end; //ZEStrToODFBorderStyle
 
-//Записывает настройки стиля
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 //INPUT
-//  var XMLSS: TZEXMLSS           - хранилище
-//      _xml: TZsspXMLWriterH     - писатель
-//      StyleNum: integer         - номер стиля
-//      isDefaultStyle: boolean   - является-ли данный стиль стилем по-умолчанию
+//  var XMLSS: TZEXMLSS           - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      _xml: TZsspXMLWriterH     - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      StyleNum: integer         - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+//      isDefaultStyle: boolean   - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 procedure ODFWriteTableStyle(var XMLSS: TZEXMLSS; _xml: TZsspXMLWriterH; const StyleNum: integer; isDefaultStyle: boolean);
 var
   b: boolean;
@@ -3729,47 +3717,47 @@ var
 begin
 {
      <attribute name="style:family"><value>table-cell</value>
-     Доступны тэги:
+     пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ:
         style:table-cell-properties
         style:paragraph-properties
         style:text-properties
 }
 
-  //Тэг style:table-cell-properties
-  //Возможные атрибуты:
-  //    style:vertical-align - выравниванние по вертикали (top | middle | bottom | automatic)
-  //??  style:text-align-source - источник выравнивания текста (fix | value-type)
-  //??  style:direction - направление символов в ячейке (ltr | ttb) слева-направо и сверху-вниз
-  //??  style:glyph-orientation-vertical - ориентация глифа по вертикали
-  //??  style:shadow - применяется эффект тени
-  //    fo:background-color - цвет фона ячейки
+  //пїЅпїЅпїЅ style:table-cell-properties
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
+  //    style:vertical-align - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (top | middle | bottom | automatic)
+  //??  style:text-align-source - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (fix | value-type)
+  //??  style:direction - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (ltr | ttb) пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅ
+  //??  style:glyph-orientation-vertical - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  //??  style:shadow - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+  //    fo:background-color - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   //    fo:border           - [
   //    fo:border-top       -
-  //    fo:border-bottom    -   обрамление ячейки
+  //    fo:border-bottom    -   пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   //    fo:border-left      -
   //    fo:border-right     -  ]
-  //    style:diagonal-tl-br - диагональ верхний левый правый нижний
+  //    style:diagonal-tl-br - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   //       style:diagonal-bl-tr-widths
-  //    style:diagonal-bl-tr - диагональ нижний левый правый верхний угол
+  //    style:diagonal-bl-tr - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
   //       style:diagonal-tl-br-widths
   //    style:border-line-width         -  [
   //    style:border-line-width-top     -
-  //    style:border-line-width-bottom  -   толщина линии обрамления
+  //    style:border-line-width-bottom  -   пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   //    style:border-line-width-left    -
   //    style:border-line-width-right   -  ]
   //    fo:padding          - [
   //    fo:padding-top      -
-  //    fo:padding-bottom   -  отступы
+  //    fo:padding-bottom   -  пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   //    fo:padding-left     -
   //    fo:padding-right    - ]
-  //    fo:wrap-option  - свойство переноса по словам (no-wrap | wrap)
-  //    style:rotation-angle - угол поворота (int >= 0)
-  //??  style:rotation-align - выравнивание после поворота (none | bottom | top | center)
-  //??  style:cell-protect - (none | hidden­and­protected ?? protected | formula­hidden)
-  //??  style:print-content - выводить ли на печать содержимое ячейки (bool)
-  //??  style:decimal-places - кол-во дробных разрядов
-  //??  style:repeat-content - повторять-ли содержимое ячейки (bool)
-  //    style:shrink-to-fit - подгонять ли содержимое по размеру, если текст не помещается (bool)
+  //    fo:wrap-option  - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (no-wrap | wrap)
+  //    style:rotation-angle - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (int >= 0)
+  //??  style:rotation-align - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (none | bottom | top | center)
+  //??  style:cell-protect - (none | hiddenпїЅandпїЅprotected ?? protected | formulaпїЅhidden)
+  //??  style:print-content - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (bool)
+  //??  style:decimal-places - пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  //??  style:repeat-content - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (bool)
+  //    style:shrink-to-fit - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (bool)
 
   _xml.Attributes.Clear();
   ProcessedStyle := XMLSS.Styles[StyleNum];
@@ -3794,7 +3782,7 @@ begin
     end;
   end;
 
-  //TODO: по умолчанию no-wrap?
+  //TODO: пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ no-wrap?
   if (ProcessedStyle.Alignment.WrapText) then
     _xml.Attributes.Add('fo:wrap-option', 'wrap');
 
@@ -3816,9 +3804,9 @@ begin
     end;
   end;
 
-  //Выравнивание по вертикали
-// при загрузке XML в Excel 2010  ZVJustify почти везде (кроме ZHFill) рисуется вверху,
-// a ZV[Justified]Distributed рисуются в по центру - но это для одного "слова"
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+// пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ XML пїЅ Excel 2010  ZVJustify пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ ZHFill) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ,
+// a ZV[Justified]Distributed пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅпїЅ"
   case (ProcessedStyle.Alignment.Vertical) of
     ZVAutomatic: s := 'automatic';
     ZVTop, ZVJustify: s := 'top';
@@ -3828,7 +3816,7 @@ begin
   end;
   _xml.Attributes.Add('style:vertical-align', s);
 
-//??  style:text-align-source - источник выравнивания текста (fix | value-type)
+//??  style:text-align-source - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (fix | value-type)
   _xml.Attributes.Add('style:text-align-source',
       IfThen( ZHAutomatic = ProcessedStyle.Alignment.Horizontal,
               'value-type', 'fix') );
@@ -3836,14 +3824,14 @@ begin
    if ZHFill = ProcessedStyle.Alignment.Horizontal then
      _xml.Attributes.Add('style:repeat-content', ODFBoolToStr(true), false);
 
-  //Поворот текста
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   _xml.Attributes.Add('style:direction',
        IfThen(ProcessedStyle.Alignment.VerticalText, 'ttb', 'ltr'), false);
   if (ProcessedStyle.Alignment.Rotate <> 0) then
     _xml.Attributes.Add('style:rotation-angle',
         IntToStr( ProcessedStyle.Alignment.Rotate mod 360 ));
 
-  //Цвет фона ячейки
+  //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   if ((ProcessedStyle.BGColor <> XMLSS.Styles.DefaultStyle.BGColor) or (isDefaultStyle)) then
     if (ProcessedStyle.BGColor <> clWindow) then
       _xml.Attributes.Add(ZETag_fo_background_color, '#' + ColorToHTMLHex(ProcessedStyle.BGColor));
@@ -3855,16 +3843,16 @@ begin
   _xml.WriteEmptyTag('style:table-cell-properties', true, true);
 
   //*************
-  //Тэг style-paragraph-properties
-  //Возможные атрибуты:
-  //??  fo:line-height - фиксированная высота строки
-  //??  style:line-height-at-least - минимальная высотка строки
-  //??  style:line-spacing - межстрочный интервал
-  //??  style:font-independent-line-spacing - независимый от шрифта межстрочный интервал (bool)
-  //    fo:text-align - выравнивание текста (start | end | left | right | center | justify)
-  //??  fo:text-align-last - выравнивание текста в последней строке (start | center | justify)
-  //??  style:justify-single-word - выравнивать-ли последнее слово (bool)
-  //??  fo:keep-together - не разрывать (auto | always)
+  //пїЅпїЅпїЅ style-paragraph-properties
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
+  //??  fo:line-height - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+  //??  style:line-height-at-least - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+  //??  style:line-spacing - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  //??  style:font-independent-line-spacing - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (bool)
+  //    fo:text-align - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (start | end | left | right | center | justify)
+  //??  fo:text-align-last - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (start | center | justify)
+  //??  style:justify-single-word - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (bool)
+  //??  fo:keep-together - пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (auto | always)
   //??  fo:widows - int > 0
   //??  fo:orphans - int > 0
   //??  style:tab-stop-distance - int > 0
@@ -3874,7 +3862,7 @@ begin
   // ZHFill -> style:repeat-content  ?
   if ZHAutomatic <> ProcessedStyle.Alignment.Horizontal then begin
     _xml.Attributes.Clear();
-    //Выравнивание по горизонтали
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     case (ProcessedStyle.Alignment.Horizontal) of
       //ZHAutomatic: s := 'start';//'right';
       ZHLeft: s := 'start';//'left';
@@ -3891,79 +3879,79 @@ begin
   end;
 
   //*************
-  //Тэг style:text-properties
-  //Возможные атрибуты:
-  //??  fo:font-variant - отображение текста прописныим буквами (normal | small-caps). Взаимоисключается с fo:text-transform
-  //??  fo:text-transform - преобразование текста (none | lowercase | uppercase | capitalize)
-  //    fo:color - цвет переднего плана текста
-  //    fo:text-indent - первая строка параграфа, с единицами изм.
-  //??  style:use-window-font-color - должен ли цвет переднего плана окна быть цветом фона для светлого фона и белый для тёмного фона (bool)
-  //??  style:text-outline - показывать ли структуру текста или текст (bool)
-  //    style:text-line-through-type - тип линии зачёркивания текста (none | single | double)
+  //пїЅпїЅпїЅ style:text-properties
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
+  //??  fo:font-variant - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (normal | small-caps). пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ fo:text-transform
+  //??  fo:text-transform - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (none | lowercase | uppercase | capitalize)
+  //    fo:color - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+  //    fo:text-indent - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ.
+  //??  style:use-window-font-color - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (bool)
+  //??  style:text-outline - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (bool)
+  //    style:text-line-through-type - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (none | single | double)
   //    style:text-line-through-style - (none | single | double) ??
-  //??  style:text-line-through-width - толщина зачёркивания
-  //??  style:text-line-through-color - цвет зачёркивания
+  //??  style:text-line-through-width - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  //??  style:text-line-through-color - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   //??  style:text-line-through-text
   //??  style:text-line-through-text-style
   //??  style:text-position - (super | sub ?? percent)
   //     style:font-name          - [
-  //     style:font-name-asian    - название шрифта
+  //     style:font-name-asian    - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   //     style:font-name-complex  - ]
   //      fo:font-family            - [
-  //      style:font-family-asian   -  семейство шрифтов
+  //      style:font-family-asian   -  пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   //      style:font-family-complex - ]
   //      style:font-family-generic         - [
-  //      style:font-family-generic-asian   - Группа семейства шрифтов (roman | swiss | modern | decorative | script | system)
+  //      style:font-family-generic-asian   - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (roman | swiss | modern | decorative | script | system)
   //      style:font-family-generic-complex - ]
   //    style:font-style-name         - [
-  //    style:font-style-name-asian   - стиль шрифта
+  //    style:font-style-name-asian   - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   //    style:font-style-name-complex - ]
   //??  style:font-pitch          - [
-  //??  style:font-pitch-asian    - шаг шрифта (fixed | variable)
+  //??  style:font-pitch-asian    - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (fixed | variable)
   //??  style:font-pitch-complex  - ]
   //??  style:font-charset          - [
-  //??  style:font-charset-asian    - набор символов
+  //??  style:font-charset-asian    - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   //??  style:font-charset-complex  - ]
   //    fo:font-size            - [
-  //    style:font-size-asian   -  размер шрифта
+  //    style:font-size-asian   -  пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   //    style:font-size-complex - ]
   //??  style:font-size-rel         - [
-  //??  style:font-size-rel-asian   - масштаб шрифта
+  //??  style:font-size-rel-asian   - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   //??  style:font-size-rel-complex - ]
   //??  style:script-type
-  //??  fo:letter-spacing - межбуквенный интервал
+  //??  fo:letter-spacing - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   //??  fo:language         - [
-  //??  fo:language-asian   - код языка
+  //??  fo:language-asian   - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
   //??  fo:language-complex - ]
   //??  fo:country            - [
-  //??  style:country-asian   - код страны
+  //??  style:country-asian   - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   //??  style:country-complex - ]
   //    fo:font-style             - [
-  //    style:font-style-asian    - стиль шрифта (normal | italic | oblique)
+  //    style:font-style-asian    - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (normal | italic | oblique)
   //    style:font-style-complex  - ]
-  //??  style:font-relief - рельефтность (выпуклый, высеченый, плоский) (none | embossed | engraved)
-  //??  fo:text-shadow - тень
-  //    style:text-underline-type - тип подчёркивания (none | single | double)
-  //??  style:text-underline-style - стиль подчёркивания (none | solid | dotted | dash | long-dash | dot-dash | dot-dot-dash | wave)
-  //??  style:text-underline-width - толщина подчёркивания (auto | norma | bold | thin | dash | medium | thick ?? int>0)
-  //??  style:text-underline-color - цвет подчёркивания
+  //??  style:font-relief - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ) (none | embossed | engraved)
+  //??  fo:text-shadow - пїЅпїЅпїЅпїЅ
+  //    style:text-underline-type - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (none | single | double)
+  //??  style:text-underline-style - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (none | solid | dotted | dash | long-dash | dot-dash | dot-dot-dash | wave)
+  //??  style:text-underline-width - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (auto | norma | bold | thin | dash | medium | thick ?? int>0)
+  //??  style:text-underline-color - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   //    fo:font-weight            - [
-  //    style:font-weight-asian   - жирность (normal | bold | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900)
+  //    style:font-weight-asian   - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (normal | bold | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900)
   //    style:font-weight-complex - ]
-  //??  style:text-underline-mode - режим подчёркивания слов (continuous | skip-white-space)
-  //??  style:text-line-through-mode - режим зачёркивания слов (continuous | skip-white-space)
-  //??  style:letter-kerning - кернинг (bool)
-  //??  style:text-blinking - мигание текста (bool)
-  //**  fo:background-color - цвет фона текста
-  //??  style:text-combine - объединение текста (none | letters | lines)
+  //??  style:text-underline-mode - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (continuous | skip-white-space)
+  //??  style:text-line-through-mode - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (continuous | skip-white-space)
+  //??  style:letter-kerning - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (bool)
+  //??  style:text-blinking - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (bool)
+  //**  fo:background-color - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+  //??  style:text-combine - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (none | letters | lines)
   //??  style:text-combine-start-char
   //??  style:text-combine-end-char
-  //??  *tyle:text-emphasize - вроде как для иероглифов выделение (none | accent | dot | circle | disc) + (above | below) (пример: "dot above")
-  //??  style:text-scale - масштаб
-  //??  style:text-rotation-angle - угол вращения текста (0 | 90 | 270)
-  //??  style:text-rotation-scale - масштабирование при вращении (fixed | line-height)
-  //??  fo:hyphenate - расстановка переносов
-  //    text:display - показывать-ли текст (true - да, none - скрыть, condition - в зависимости от атрибута text:condition)
+  //??  *tyle:text-emphasize - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (none | accent | dot | circle | disc) + (above | below) (пїЅпїЅпїЅпїЅпїЅпїЅ: "dot above")
+  //??  style:text-scale - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  //??  style:text-rotation-angle - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (0 | 90 | 270)
+  //??  style:text-rotation-scale - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (fixed | line-height)
+  //??  fo:hyphenate - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  //    text:display - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (true - пїЅпїЅ, none - пїЅпїЅпїЅпїЅпїЅпїЅ, condition - пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ text:condition)
   _xml.Attributes.Clear();
   ProcessedFont := ProcessedStyle.Font;
 
@@ -3976,7 +3964,7 @@ begin
     _xml.Attributes.Add('style:font-name-complex', s, false);
   end;
 
-  //размер шрифта
+  //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   if ((ProcessedFont.Size <> XMLSS.Styles.DefaultStyle.Font.Size) or (isDefaultStyle)) then
   begin
     s := IntToStr(ProcessedFont.Size) + 'pt';
@@ -3985,7 +3973,7 @@ begin
     _xml.Attributes.Add('style:font-size-complex', s, false);
   end;
 
-  //Жирность
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   if (fsBold in ProcessedFont.Style) then
   begin
     s := 'bold';
@@ -3994,15 +3982,15 @@ begin
     _xml.Attributes.Add('style:font-weight-complex', s, false);
   end;
 
-  //перечёркнутый текст
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
   if (fsStrikeOut in ProcessedFont.Style) then
     _xml.Attributes.Add('style:text-line-through-type', 'single', false); //(none | single | double)
 
-  //Подчёркнутый текст
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
   if (fsUnderline in ProcessedFont.Style) then
     _xml.Attributes.Add('style:text-underline-type', 'single', false); //(none | single | double)
 
-  //цвет шрифта
+  //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   if ((ProcessedFont.Color <> XMLSS.Styles.DefaultStyle.Font.Color) or (isDefaultStyle)) then
     _xml.Attributes.Add(ZETag_fo_color, '#' + ColorToHTMLHex(ProcessedFont.Color), false);
 
@@ -4017,17 +4005,17 @@ begin
   _xml.WriteEmptyTag(ZETag_style_text_properties, true, true);
 end; //ODFWriteTableStyle
 
-//Записывает в поток стили документа (styles.xml)
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (styles.xml)
 //INPUT
-//  var XMLSS: TZEXMLSS                 - хранилище
-//    Stream: TStream                   - поток для записи
-//  const _pages: TIntegerDynArray       - массив страниц
-//  const _names: TStringDynArray       - массив имён страниц
-//    PageCount: integer                - кол-во страниц
-//    TextConverter: TAnsiToCPConverter - конвертер из локальной кодировки в нужную
-//    CodePageName: string              - название кодовой страници
+//  var XMLSS: TZEXMLSS                 - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//    Stream: TStream                   - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//  const _pages: TIntegerDynArray       - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  const _names: TStringDynArray       - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//    PageCount: integer                - пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//    TextConverter: TAnsiToCPConverter - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//    CodePageName: string              - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //    BOM: ansistring                   - BOM
-//  const WriteHelper: TZEODFWriteHelper- помошник для записи
+//  const WriteHelper: TZEODFWriteHelper- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 //RETURN
 //      integer
 function ODFCreateStyles(var XMLSS: TZEXMLSS; Stream: TStream; const _pages: TIntegerDynArray;
@@ -4038,7 +4026,7 @@ var
   i: integer;
 
   {$IFDEF ZUSE_CONDITIONAL_FORMATTING}
-  //Добавить стили условного форматирования
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   procedure _AddConditionalStyles();
   var
     i, j, k: integer;
@@ -4110,7 +4098,7 @@ begin
     _xml.Attributes.Clear();
     _xml.WriteTagNode('office:styles', true, true, true);
 
-    //Стиль по-умолчанию
+    //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     _xml.Attributes.Clear();
     _xml.Attributes.Add(ZETag_Attr_StyleName, 'Default');
     _xml.Attributes.Add(ZETag_style_family, 'table-cell', false);
@@ -4139,15 +4127,15 @@ begin
   end;
 end; //ODFCreateStyles
 
-//Записывает в поток настройки (settings.xml)
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (settings.xml)
 //INPUT
-//  var XMLSS: TZEXMLSS                 - хранилище
-//    Stream: TStream                   - поток для записи
-//  const _pages: TIntegerDynArray      - массив страниц
-//  const _names: TStringDynArray       - массив имён страниц
-//    PageCount: integer                - кол-во страниц
-//    TextConverter: TAnsiToCPConverter - конвертер из локальной кодировки в нужную
-//    CodePageName: string              - название кодовой страници
+//  var XMLSS: TZEXMLSS                 - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//    Stream: TStream                   - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//  const _pages: TIntegerDynArray      - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  const _names: TStringDynArray       - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//    PageCount: integer                - пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//    TextConverter: TAnsiToCPConverter - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//    CodePageName: string              - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //    BOM: ansistring                   - BOM
 //RETURN
 //      integer
@@ -4201,7 +4189,7 @@ var
 
     b := (_SheetOptions.SplitHorizontalMode = ZSplitSplit) or
          (_SheetOptions.SplitHorizontalMode = ZSplitSplit);
-    //это не ошибка (_SheetOptions.SplitHorizontalMode = VerticalSplitMode)
+    //пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (_SheetOptions.SplitHorizontalMode = VerticalSplitMode)
     _WriteSplitValue(_SheetOptions.SplitHorizontalMode, _SheetOptions.SplitHorizontalValue, 'VerticalSplitMode', 'VerticalSplitPosition', b);
     _WriteSplitValue(_SheetOptions.SplitVerticalMode, _SheetOptions.SplitVerticalValue, 'HorizontalSplitMode', 'HorizontalSplitPosition', b);
 
@@ -4219,7 +4207,7 @@ var
     i: integer;
 
   begin
-    //Выделенный лист (ActiveTable). В OO только 1 шт.
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (ActiveTable). пїЅ OO пїЅпїЅпїЅпїЅпїЅпїЅ 1 пїЅпїЅ.
     for i := 0 to PageCount - 1 do
       if (XMLSS.Sheets[_pages[i]].Selected) then
       begin
@@ -4288,17 +4276,17 @@ begin
   end;
 end; //ODFCreateSettings
 
-//Записывает в поток документ + автоматические стили (content.xml)
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (content.xml)
 //INPUT
-//  var XMLSS: TZEXMLSS                 - хранилище
-//    Stream: TStream                   - поток для записи
-//  const _pages: TIntegerDynArray      - массив страниц
-//  const _names: TStringDynArray       - массив имён страниц
-//    PageCount: integer                - кол-во страниц
-//    TextConverter: TAnsiToCPConverter - конвертер из локальной кодировки в нужную
-//    CodePageName: string              - название кодовой страници
+//  var XMLSS: TZEXMLSS                 - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//    Stream: TStream                   - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//  const _pages: TIntegerDynArray      - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  const _names: TStringDynArray       - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//    PageCount: integer                - пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//    TextConverter: TAnsiToCPConverter - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//    CodePageName: string              - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //    BOM: ansistring                   - BOM
-//  const WriteHelper: TZEODFWriteHelper- помошник для записи
+//  const WriteHelper: TZEODFWriteHelper- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 //RETURN
 //      integer
 function ODFCreateContent(var XMLSS: TZEXMLSS; Stream: TStream; const _pages: TIntegerDynArray;
@@ -4306,7 +4294,7 @@ function ODFCreateContent(var XMLSS: TZEXMLSS; Stream: TStream; const _pages: TI
                           BOM: ansistring; const WriteHelper: TZEODFWriteHelper): integer;
 var
   _xml: TZsspXMLWriterH;
-  ColumnStyle, RowStyle: array of array of integer;  //стили столбцов/строк
+  ColumnStyle, RowStyle: array of array of integer;  //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅ
   i: integer;
   _dt: TDateTime;
   _currColumn: TZColOptions;
@@ -4315,7 +4303,7 @@ var
   _cfwriter: TZODFConditionalWriteHelper;
   {$ENDIF}
 
-  //Заголовок для content.xml
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ content.xml
   procedure WriteHeader();
   var
     i, j: integer;
@@ -4324,7 +4312,7 @@ var
     ColStyleNumber, RowStyleNumber: integer;
     s: string;
 
-    //Стили для колонок
+    //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     procedure WriteColumnStyle(now_i, now_j, now_StyleNumber, count_i{, count_j}: integer);
     var
       i, j: integer;
@@ -4343,12 +4331,12 @@ var
       _xml.WriteTagNode(ZETag_StyleStyle, true, true, false);
 
       _xml.Attributes.Clear();
-      //разрыв страницы (fo:break-before = auto | column | page)
+      //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (fo:break-before = auto | column | page)
       s := 'auto';
       if (_currColumn.Breaked) then
         s := 'column';
       _xml.Attributes.Add('fo:break-before', s);
-      //Ширина колонки style:column-width
+      //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ style:column-width
       _xml.Attributes.Add('style:column-width', ODFGetSizeToStr(_currColumn.WidthMM * 0.1), false);
 
       if (_currColumn.AutoFitWidth) then
@@ -4383,7 +4371,7 @@ var
       end;
     end; //WriteColumnStyle
 
-    //Стили для строк
+    //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     procedure WriteRowStyle(now_i, now_j, now_StyleNumber, count_i{, count_j}: integer);
     var
       i, j, k: integer;
@@ -4401,27 +4389,27 @@ var
       _currRow := XMLSS.Sheets[_pages[now_i]].Rows[now_j];
 
       _xml.Attributes.Clear();
-      //разрыв страницы (fo:break-before = auto | column | page)
+      //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (fo:break-before = auto | column | page)
       s := 'auto';
       if (_currRow.Breaked) then
         s := 'page';
       _xml.Attributes.Add('fo:break-before', s);
-      //высота строки style:row-height
+      //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ style:row-height
       _xml.Attributes.Add('style:row-height', ODFGetSizeToStr(_currRow.HeightMM * 0.1), false);
        //?? style:min-row-height
 
-      //style:use-optimal-row-height - пересчитывать ли высоту, если содержимое ячеек изменилось
+      //style:use-optimal-row-height - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
       //if (abs(_currRow.Height - XMLSS.Sheets[_pages[now_i]].DefaultRowHeight) < 0.001) then
       if (_currRow.AutoFitHeight) then
         _xml.Attributes.Add(ZETag_style_use_optimal_row_height, ODFBoolToStr(true), false);
-      //fo:background-color - цвет фона
+      //fo:background-color - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
       k := XMLSS.Sheets[_pages[now_i]].Rows[now_j].StyleID;
       if (k > -1) then
         if (XMLSS.Styles.Count - 1 >= k) then
           if (XMLSS.Styles[k].BGColor <> XMLSS.Styles[-1].BGColor) then
             _xml.Attributes.Add(ZETag_fo_background_color, '#' + ColorToHTMLHex(XMLSS.Styles[k].BGColor), false);
 
-      //?? fo:keep-together - неразрывные строки (auto | always)
+      //?? fo:keep-together - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (auto | always)
       _xml.WriteEmptyTag('style:table-row-properties', true, false);
 
       _xml.WriteEndTagNode(); //style:style
@@ -4494,12 +4482,12 @@ var
     GenODContentAttr(_xml.Attributes);
     _xml.WriteTagNode('office:document-content', true, true, false);
     _xml.Attributes.Clear();
-    _xml.WriteEmptyTag('office:scripts', true, false);  //потом на досуге можно подумать
+    _xml.WriteEmptyTag('office:scripts', true, false);  //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     ZEWriteFontFaceDecls(XMLSS, _xml);
 
     ///********   Automatic Styles   ********///
     _xml.WriteTagNode(ZETag_office_automatic_styles, true, true, false);
-    //******* стили столбцов
+    //******* пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     kol := High(_pages);
     SetLength(ColumnStyle, kol + 1);
     for i := 0 to kol do
@@ -4520,7 +4508,7 @@ var
       end;
     end;
 
-    //******* стили строк
+    //******* пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     SetLength(RowStyle, kol + 1);
     for i := 0 to kol do
     begin
@@ -4540,7 +4528,7 @@ var
       end;
     end;
 
-    //******* остальные стили
+    //******* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     for i := 0 to XMLSS.Styles.Count - 1 do
     begin
       _xml.Attributes.Clear();
@@ -4556,7 +4544,7 @@ var
       _xml.WriteEndTagNode(); //style:style
     end;
 
-    //Стили для условного форматирования
+    //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     {$IFDEF ZUSE_CONDITIONAL_FORMATTING}
     _cfwriter.WriteCFStyles(_xml);
     {$ENDIF}
@@ -4570,40 +4558,40 @@ var
 
   //<table:table> ... </table:table>
   //INPUT
-  //      PageNum: integer    - номер страницы в хранилище
-  //  const TableName: string - название страницы
-  //      PageIndex: integer  - номер в массиве страниц
+  //      PageNum: integer    - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  //  const TableName: string - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  //      PageIndex: integer  - пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   procedure WriteODFTable(const PageNum: integer; const TableName: string; PageIndex: integer);
   var
     b: boolean;
     i, j: integer;
     s, ss: string;
     k, t: integer;
-    NumTopLeft: integer;  //Номер объединённой области, в которой ячейка является верхней левой
-    NumArea: integer;     //Номер объединённой области, в которую входит ячейка
+    NumTopLeft: integer;  //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    NumArea: integer;     //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     isNotEmpty: boolean;
     _StyleID: integer;
     _CellData: string;
     ProcessedSheet: TZSheet;
-    DivedIntoHeader: boolean; // начали запись повторяющегося на печати столбца
+    DivedIntoHeader: boolean; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     _t: Double;
 
-    //Выводит содержимое ячейки с учётом переноса строк
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     procedure WriteTextP(xml: TZsspXMLWriterH; const CellData: string; const href: string = '');
     var
       s: string;
       i: integer;
 
     begin
-      //ссылка <text:p><text:a xlink:href="http://google.com/" office:target-frame-name="_blank">Some_text</text:a></text:p>
-      //Ссылка имеет больший приоритет
+      //пїЅпїЅпїЅпїЅпїЅпїЅ <text:p><text:a xlink:href="http://google.com/" office:target-frame-name="_blank">Some_text</text:a></text:p>
+      //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
       if (href > '') then
       begin
         xml.Attributes.Clear();
         xml.WriteTagNode(ZETag_text_p, true, false, true);
         xml.Attributes.Add('xlink:type', 'simple'); // mandatory for ODF 1.2 validator
         xml.Attributes.Add('xlink:href', href);
-        //office:target-frame-name='_blank' - открывать в новом фрейме
+        //office:target-frame-name='_blank' - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         xml.WriteTag('text:a', CellData, false, false, true);
         xml.WriteEndTagNode(); //text:p
       end else
@@ -4627,14 +4615,14 @@ var
   begin
     ProcessedSheet := XMLSS.Sheets[PageNum];
     _xml.Attributes.Clear();
-    //Атрибуты для таблицы:
-    //    table:name        - название таблицы
-    //    table:style-name  - стиль таблицы
-    //    table:protected   - признак защищённой таблицы (true/false)
-    //?   table:protection-key - ХЭШ пароля (если таблица защищённая)
-    //?   table:print       - является-ли таблица печатаемой (true - по-умолчанию)
-    //?   table:display     - признак отображаемости таблицы (мощнее печати, true - по-умолчани.)
-    //?   table:print-ranges - диапазон печати
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
+    //    table:name        - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    //    table:style-name  - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    //    table:protected   - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (true/false)
+    //?   table:protection-key - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+    //?   table:print       - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (true - пїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+    //?   table:display     - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, true - пїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.)
+    //?   table:print-ranges - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     _xml.Attributes.Add('table:name', Tablename, false);
     _xml.Attributes.Add(ZETag_table_style_name, 'ta' + IntToStr(PageIndex + 1), false);
     b := ProcessedSheet.Protect;
@@ -4642,21 +4630,21 @@ var
       _xml.Attributes.Add('table:protected', ODFBoolToStr(b), false);
     _xml.WriteTagNode('table:table', true, true, true);
 
-    //::::::: колонки :::::::::
-    //table:table-column - описание колонок
-    //Атрибуты
-    //    table:number-columns-repeated   - кол-во столбцов, в которых повторяется описание столбца (кол-во - 1 последующих пропускать) - потом надо подумать {tut}
-    //    table:style-name                - стиль столбца
-    //    table:visibility                - видимость столбца (по-умолчанию visible);
-    //    table:default-cell-style-name   - стиль ячеек по умолчанию (если не задан стиль строки и ячейки)
+    //::::::: пїЅпїЅпїЅпїЅпїЅпїЅпїЅ :::::::::
+    //table:table-column - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    //    table:number-columns-repeated   - пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ-пїЅпїЅ - 1 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ) - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ {tut}
+    //    table:style-name                - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    //    table:visibility                - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ visible);
+    //    table:default-cell-style-name   - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
     DivedIntoHeader := False;
     for i := 0 to ProcessedSheet.ColCount - 1 do
     begin
       _xml.Attributes.Clear();
       _xml.Attributes.Add(ZETag_table_style_name, 'co' + IntToStr(ColumnStyle[PageIndex][i]));
-      //Видимость: table:visibility (visible | collapse | filter)
+      //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: table:visibility (visible | collapse | filter)
       if (ProcessedSheet.Columns[i].Hidden) then
-        _xml.Attributes.Add('table:visibility', 'collapse', false); //или всё-таки filter?
+        _xml.Attributes.Add('table:visibility', 'collapse', false); //пїЅпїЅпїЅ пїЅпїЅ-пїЅпїЅпїЅпїЅ filter?
       s := 'Default';
       k := ProcessedSheet.Columns[i].StyleID;
       if (k >= 0) then
@@ -4664,10 +4652,10 @@ var
       _xml.Attributes.Add('table:default-cell-style-name', s, false);
       //table:default-cell-style-name
 
-      // на память: учёт столбцов-заголовков сам по себе
-      //  должен влиять на table:number-columns-repeated
+      // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
+      //  пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ table:number-columns-repeated
       with ProcessedSheet.ColsToRepeat do
-        if Active and (i = From) then begin // входим в зону заголовка
+        if Active and (i = From) then begin // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
            _xml.WriteTagNode('table:table-header-columns', []);
            DivedIntoHeader := true;
         end;
@@ -4675,44 +4663,44 @@ var
       _xml.WriteEmptyTag('table:table-column', true, false);
 
       if DivedIntoHeader and (i = ProcessedSheet.ColsToRepeat.Till) then begin
-         // выходим из зоны заголовка
+         // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
            _xml.WriteEndTagNode;//  TagNode('table:table-header-columns', []);
            DivedIntoHeader := False;
         end;
     end;
-    if DivedIntoHeader then // может кто-то уменьшил ColCount после установки ColsToRepeat ?
+    if DivedIntoHeader then // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ColCount пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ColsToRepeat ?
        _xml.WriteEndTagNode;//  TagNode('table:table-header-columns', []);
 
-    //::::::: строки :::::::::
+    //::::::: пїЅпїЅпїЅпїЅпїЅпїЅ :::::::::
     DivedIntoHeader := False;
     for i := 0 to ProcessedSheet.RowCount - 1 do
     begin
       //table:table-row
       _xml.Attributes.Clear();
       _xml.Attributes.Add(ZETag_table_style_name, 'ro' + IntToStr(RowStyle[PageIndex][i]));
-      //?? table:number-rows-repeated - кол-во повторяемых строк
-      // table:default-cell-style-name - стиль ячейки по-умолчанию
+      //?? table:number-rows-repeated - пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+      // table:default-cell-style-name - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
       k := ProcessedSheet.Rows[i].StyleID;
       if (k >= 0) then
       begin
         s := 'ce' + IntToStr(k);
         _xml.Attributes.Add('table:default-cell-style-name', s, false);
       end;
-      // table:visibility - видимость строки
+      // table:visibility - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
       if (ProcessedSheet.Rows[i].Hidden) then
         _xml.Attributes.Add('table:visibility', 'collapse', false);
 
-      // на память: учёт строк-заголовков сам по себе
-      //  должен влиять на table:number-rows-repeated
+      // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
+      //  пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ table:number-rows-repeated
       with ProcessedSheet.RowsToRepeat do
-        if Active and (i = From) then begin // входим в зону заголовка
+        if Active and (i = From) then begin // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
            _xml.WriteTagNode('table:table-header-rows', []);
            DivedIntoHeader := true;
         end;
 
       _xml.WriteTagNode('table:table-row', true, true, false);
-      {ячейки}
-      //**** пробегаем по всем ячейкам
+      {пїЅпїЅпїЅпїЅпїЅпїЅ}
+      //**** пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
       for j := 0 to ProcessedSheet.ColCount - 1 do
       begin
         NumTopLeft := ProcessedSheet.MergeCells.InLeftTopCorner(j, i);
@@ -4720,27 +4708,27 @@ var
         s := 'table:table-cell';
         _xml.Attributes.Clear();
         isNotEmpty := false;
-        //Возможные атрибуты для ячейки:
-        //    table:number-columns-repeated   - кол-во повторяемых ячеек
-        //    table:number-columns-spanned    - кол-во объединённых столбцов
-        //    table:number-rows-spanned       - кол-во объединённых строк
-        //    table:style-name                - стиль ячейки
-        //??  table:content-validation-name   - проводится ли в данной ячейке проверка правильности
-        //    table:formula                   - формула
-        //      office:value                  -  текущее числовое значение (для float | percentage | currency)
-        //??    office:date-value             -  текущее значение даты
-        //??    office:time-value             -  текущее значение времени
-        //??    office:boolean-value          -  текущее логическое значение
-        //      office:string-value           -  текущее строковое значение
-        //     table:value-type               - тип значения в ячейке (float | percentage | currency,
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ:
+        //    table:number-columns-repeated   - пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+        //    table:number-columns-spanned    - пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        //    table:number-rows-spanned       - пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+        //    table:style-name                - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        //??  table:content-validation-name   - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        //    table:formula                   - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        //      office:value                  -  пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ float | percentage | currency)
+        //??    office:date-value             -  пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+        //??    office:time-value             -  пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        //??    office:boolean-value          -  пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        //      office:string-value           -  пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        //     table:value-type               - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (float | percentage | currency,
         //                                        date, time, boolean, string
-        //??     tableoffice:currency         - текущая денежная единица (только для currency)
-        //     table:protected                - защищённость ячейки
-        if ((NumTopLeft < 0) and (NumArea >= 0)) then //скрытая ячейка в объединённой области
+        //??     tableoffice:currency         - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ currency)
+        //     table:protected                - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        if ((NumTopLeft < 0) and (NumArea >= 0)) then //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         begin
           s := 'table:covered-table-cell';
         end else
-        if (NumTopLeft >= 0) then   //объединённая ячейка (левая верхняя)
+        if (NumTopLeft >= 0) then   //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
         begin
           t := ProcessedSheet.MergeCells.Items[NumTopLeft].Right -
                ProcessedSheet.MergeCells.Items[NumTopLeft].Left + 1;
@@ -4750,7 +4738,7 @@ var
           _xml.Attributes.Add('table:number-rows-spanned', IntToStr(t), false);
         end;
 
-        //стиль
+        //пїЅпїЅпїЅпїЅпїЅ
         {$IFDEF ZUSE_CONDITIONAL_FORMATTING}
         _StyleID := _cfwriter.GetStyleNum(PageIndex, j, i);
         if ((_StyleID >= 0) and (_StyleID < XMLSS.Styles.Count + _cfwriter.StylesCount)) then
@@ -4760,7 +4748,7 @@ var
         {$ENDIF}
           _xml.Attributes.Add(ZETag_table_style_name, 'ce' + IntToStr(_StyleID), false);
 
-        //защита ячейки
+        //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         b := XMLSS.Styles[_StyleID].Protect;
         if (b) then
           _xml.Attributes.Add('table:protected', ODFBoolToStr(b), false);
@@ -4820,22 +4808,22 @@ var
               end; //if
             end; //ZEDateTime
           else
-            // всё остальное считаем строкой (потом подправить, возможно, добавить новые типы)
+            // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ)
             {ZEansistring ZEError ZEDateTime}
         end; //case
 
         if (ss > '') then
           _xml.Attributes.Add('office:value-type', ss, false);
 
-        //формула  
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ  
         ss := ProcessedSheet.Cell[j, i].Formula;
         if (ss > '') then
           _xml.Attributes.Add('table:formula', ss, false);
 
-        //Примечание
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         //office:annotation
-        //Атрибуты:
-        //    office:display - отображать ли (true | false)
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
+        //    office:display - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ (true | false)
         //??  draw:style-name
         //??  draw:text-style-name
         //??  svg:width
@@ -4854,7 +4842,7 @@ var
           if (b) then
             _xml.Attributes.Add('office:display', ODFBoolToStr(b), false);
           _xml.WriteTagNode('office:annotation', true, true, false);
-          //автор примечания
+          //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
           if (ProcessedSheet.Cell[j, i].CommentAuthor > '') then
           begin
             _xml.Attributes.Clear();
@@ -4865,7 +4853,7 @@ var
           _xml.WriteEndTagNode(); //office:annotation
         end;
 
-        //Содержимое ячейки
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         if (_CellData > '') then
         begin
           if (not isNotEmpty) then
@@ -4876,21 +4864,21 @@ var
         end;
 
         if (isNotEmpty) then
-          _xml.WriteEndTagNode() //ячейка  table:table-cell | table:covered-table-cell
+          _xml.WriteEndTagNode() //пїЅпїЅпїЅпїЅпїЅпїЅ  table:table-cell | table:covered-table-cell
         else
           _xml.WriteEmptyTag(s, true, true);
       end; //for j
-      {/ячейки}
+      {/пїЅпїЅпїЅпїЅпїЅпїЅ}
 
       if DivedIntoHeader and (i = ProcessedSheet.RowsToRepeat.Till) then begin
-         // выходим из зоны заголовка
+         // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
            _xml.WriteEndTagNode;//  TagNode('table:table-header-rows', []);
            DivedIntoHeader := False;
         end;
 
       _xml.WriteEndTagNode(); //table:table-row
     end;
-    if DivedIntoHeader then // может кто-то уменьшил RowCount после установки RowsToRepeat ?
+    if DivedIntoHeader then // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ RowCount пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ RowsToRepeat ?
        _xml.WriteEndTagNode;//  TagNode('table:table-header-rows', []);
 
     {$IFDEF ZUSE_CONDITIONAL_FORMATTING}
@@ -4899,7 +4887,7 @@ var
 
     _xml.WriteEndTagNode(); //table:table
 
-    //автофильтр
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     if Trim(ProcessedSheet.AutoFilter)<>'' then
     begin
       _xml.Attributes.Clear;
@@ -4915,7 +4903,7 @@ var
     
   end; //WriteODFTable
 
-  //Сами таблицы
+  //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   procedure WriteBody();
   var
     i: integer;
@@ -4970,18 +4958,18 @@ begin
   end;
 end; //ODFCreateContent
 
-//Записывает в поток метаинформацию (meta.xml)
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (meta.xml)
 //INPUT
-//  var XMLSS: TZEXMLSS                 - хранилище
-//    Stream: TStream                   - поток для записи
-//    TextConverter: TAnsiToCPConverter - конвертер из локальной кодировки в нужную
-//    CodePageName: string              - название кодовой страници
+//  var XMLSS: TZEXMLSS                 - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//    Stream: TStream                   - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//    TextConverter: TAnsiToCPConverter - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//    CodePageName: string              - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //    BOM: ansistring                   - BOM
 //RETURN
 //      integer
 function ODFCreateMeta(var XMLSS: TZEXMLSS; Stream: TStream; TextConverter: TAnsiToCPConverter; CodePageName: string; BOM: ansistring): integer;
 var
-  _xml: TZsspXMLWriterH;    //писатель
+  _xml: TZsspXMLWriterH;    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   s: string;
 
 begin
@@ -5003,26 +4991,26 @@ begin
     _xml.WriteTagNode('office:document-meta', true, true, false);
     _xml.Attributes.Clear();
     _xml.WriteTagNode('office:meta', true, true, true);
-    //дата создания
+    //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     s := ZEDateTimeToStr(XMLSS.DocumentProperties.Created);
     _xml.WriteTag('meta:creation-date', s, true, false, true);
-    //Дата последнего редактирования пусть будет равна дате создания
+    //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     _xml.WriteTag('dc:date', s, true, false, true);
 
     {
-    //Длительность редактирования PnYnMnDTnHnMnS
-    //Пока не используется
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ PnYnMnDTnHnMnS
+    //пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     <meta:editing-duration>PT2M2S</meta:editing-duration>
     }
 
-    //Кол-во циклов редактирования (каждый раз, когда сохраняется, нужно увеличивать на 1) > 0
-    //Пока считаем, что документ создаётся только 1 раз
-    //Потом можно будет добавить поле в хранилище
+    //пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 1) > 0
+    //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 1 пїЅпїЅпїЅ
+    //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     _xml.WriteTag('meta:editing-cycles', '1', true, false, true);
 
     {
-    //Статистика документа (кол-во страниц и др)
-    //Пока не используется
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ)
+    //пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     (*
     meta:page-count
     meta:table-count
@@ -5032,8 +5020,8 @@ begin
     *)
     <meta:document-statistic meta:table-count="3" meta:cell-count="7" meta:object-count="0"/>
     }
-    //Генератор - какое приложение создало или редактировало документ
-    //Потом надо добавить такое поле в хранилище
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //    {$IFDEF FPC}
 //    s := 'FPC';
 //    {$ELSE}
@@ -5051,17 +5039,17 @@ begin
   end;
 end; //ODFCreateMeta
 
-//Создаёт манифест
+//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //INPUT
-//      Stream: TStream                   - поток для записи
-//      TextConverter: TAnsiToCPConverter - конвертер
-//      CodePageName: string              - имя кодировки
+//      Stream: TStream                   - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//      TextConverter: TAnsiToCPConverter - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      CodePageName: string              - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //      BOM: ansistring                   - BOM
 //RETURN
 //      integer
 function ODFCreateManifest(Stream: TStream; TextConverter: TAnsiToCPConverter; CodePageName: string; BOM: ansistring = ''): integer;
 var
-  _xml: TZsspXMLWriterH;    //писатель
+  _xml: TZsspXMLWriterH;    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   tag_name, att1, att2, s: string;
 
   procedure _writetag(const s1, s2: string);
@@ -5119,23 +5107,23 @@ begin
   end;
 end; //ODFCreateManifest
 
-//Сохраняет незапакованный документ в формате Open Document
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Open Document
 //INPUT
-//  var XMLSS: TZEXMLSS                   - хранилище
-//      PathName: string                  - путь к директории для сохранения (должна заканчиватся разделителем директории)
-//  const SheetsNumbers:array of integer  - массив номеров страниц в нужной последовательности
-//  const SheetsNames: array of string    - массив названий страниц
-//                                          (количество элементов в двух массивах должны совпадать)
-//      TextConverter: TAnsiToCPConverter - конвертер
-//      CodePageName: string              - имя кодировки
+//  var XMLSS: TZEXMLSS                   - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      PathName: string                  - пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+//  const SheetsNumbers:array of integer  - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  const SheetsNames: array of string    - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//                                          (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+//      TextConverter: TAnsiToCPConverter - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      CodePageName: string              - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //      BOM: ansistring                   - Byte Order Mark
 //RETURN
 //      integer
 function SaveXmlssToODFSPath(var XMLSS: TZEXMLSS; PathName: string; const SheetsNumbers:array of integer;
                          const SheetsNames: array of string; TextConverter: TAnsiToCPConverter; CodePageName: string; BOM: ansistring = ''): integer; overload;
 var
-  _pages: TIntegerDynArray;      //номера страниц
-  _names: TStringDynArray;      //названия страниц
+  _pages: TIntegerDynArray;      //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  _names: TStringDynArray;      //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   kol: integer;
   Stream: TStream;
   s: string;
@@ -5193,13 +5181,13 @@ begin
   end;
 end; //SaveXmlssToODFSPath
 
-//Сохраняет незапакованный документ в формате Open Document
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Open Document
 //INPUT
-//  var XMLSS: TZEXMLSS                   - хранилище
-//      PathName: string                  - путь к директории для сохранения (должна заканчиватся разделителем директории)
-//  const SheetsNumbers:array of integer  - массив номеров страниц в нужной последовательности
-//  const SheetsNames: array of string    - массив названий страниц
-//                                          (количество элементов в двух массивах должны совпадать)
+//  var XMLSS: TZEXMLSS                   - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      PathName: string                  - пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+//  const SheetsNumbers:array of integer  - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  const SheetsNames: array of string    - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//                                          (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 //RETURN
 //      integer
 function SaveXmlssToODFSPath(var XMLSS: TZEXMLSS; PathName: string; const SheetsNumbers:array of integer;
@@ -5208,10 +5196,10 @@ begin
   result := SaveXmlssToODFSPath(XMLSS, PathName, SheetsNumbers, SheetsNames, ZEGetDefaultUTF8Converter(), 'UTF-8', '');
 end; //SaveXmlssToODFSPath
 
-//Сохраняет незапакованный документ в формате Open Document
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Open Document
 //INPUT
-//  var XMLSS: TZEXMLSS                   - хранилище
-//      PathName: string                  - путь к директории для сохранения (должна заканчиватся разделителем директории)
+//  var XMLSS: TZEXMLSS                   - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      PathName: string                  - пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 //RETURN
 //      integer
 function SaveXmlssToODFSPath(var XMLSS: TZEXMLSS; PathName: string): integer; overload;
@@ -5219,31 +5207,32 @@ begin
   result := SaveXmlssToODFSPath(XMLSS, PathName, [], []);
 end; //SaveXmlssToODFSPath
 
-{$IFDEF FPC}
-//Сохраняет документ в формате Open Document
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Open Document
 //INPUT
-//  var XMLSS: TZEXMLSS                   - хранилище
-//      FileName: string                  - имя файла для сохранения
-//  const SheetsNumbers:array of integer  - массив номеров страниц в нужной последовательности
-//  const SheetsNames: array of string    - массив названий страниц
-//                                          (количество элементов в двух массивах должны совпадать)
-//      TextConverter: TAnsiToCPConverter - конвертер
-//      CodePageName: string              - имя кодировки
+//  var XMLSS: TZEXMLSS                   - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      FileName: string                  - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  const SheetsNumbers:array of integer  - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  const SheetsNames: array of string    - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//                                          (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+//      TextConverter: TAnsiToCPConverter - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      CodePageName: string              - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //      BOM: ansistring                   - Byte Order Mark
 //RETURN
 //      integer
 function SaveXmlssToODFS(var XMLSS: TZEXMLSS; FileName: string; const SheetsNumbers:array of integer;
                          const SheetsNames: array of string; TextConverter: TAnsiToCPConverter; CodePageName: string; BOM: ansistring = ''): integer; overload;
 var
-  _pages: TIntegerDynArray;      //номера страниц
-  _names: TStringDynArray;      //названия страниц
+  _pages: TIntegerDynArray;      //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  _names: TStringDynArray;      //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   kol: integer;
   zip: TZipper;
-  StreamC, StreamME, StreamS, StreamST, StreamMA: TStream;
+  StreamMT, StreamC, StreamME, StreamS, StreamST, StreamMA: TStream;
+  mime: AnsiString;
   _WriteHelper: TZEODFWriteHelper;
 
 begin
   zip := nil;
+  StreamMT := nil;
   StreamC := nil;
   StreamME := nil;
   StreamS := nil;
@@ -5260,6 +5249,10 @@ begin
     end;
 
     _WriteHelper := TZEODFWriteHelper.Create(XMLSS, _pages, _names, kol);
+
+    StreamMT := TMemoryStream.Create();
+    mime := AnsiString('application/vnd.oasis.opendocument.spreadsheet');
+    StreamMT.WriteBuffer(mime[1], Length(mime));
 
     zip := TZipper.Create();
 
@@ -5280,12 +5273,14 @@ begin
 
     zip.FileName := FileName;
 
+    StreamMT.Position := 0;
     StreamC.Position := 0;
     StreamME.Position := 0;
     StreamS.Position := 0;
     StreamST.Position := 0;
     StreamMA.Position := 0;
 
+    zip.Entries.AddFileEntry(StreamMT, 'mimetype');
     zip.Entries.AddFileEntry(StreamC, 'content.xml');
     zip.Entries.AddFileEntry(StreamME, 'meta.xml');
     zip.Entries.AddFileEntry(StreamS, 'settings.xml');
@@ -5300,6 +5295,8 @@ begin
 
     if (Assigned(zip)) then
       FreeAndNil(zip);
+    if (Assigned(StreamMT)) then
+      FreeAndNil(StreamMT);
     if (Assigned(StreamC)) then
       FreeAndNil(StreamC);
     if (Assigned(StreamME)) then
@@ -5314,13 +5311,13 @@ begin
 
 end; //SaveXmlssToODFS
 
-//Сохраняет документ в формате Open Document
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Open Document
 //INPUT
-//  var XMLSS: TZEXMLSS                   - хранилище
-//      FileName: string                  - имя файла для сохранения
-//  const SheetsNumbers:array of integer  - массив номеров страниц в нужной последовательности
-//  const SheetsNames: array of string    - массив названий страниц
-//                                          (количество элементов в двух массивах должны совпадать)
+//  var XMLSS: TZEXMLSS                   - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      FileName: string                  - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  const SheetsNumbers:array of integer  - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  const SheetsNames: array of string    - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//                                          (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 //RETURN
 //      integer
 function SaveXmlssToODFS(var XMLSS: TZEXMLSS; FileName: string; const SheetsNumbers:array of integer;
@@ -5329,10 +5326,10 @@ begin
   result := SaveXmlssToODFS(XMLSS, FileName, SheetsNumbers, SheetsNames, ZEGetDefaultUTF8Converter(), 'UTF-8', '');
 end; //SaveXmlssToODFS
 
-//Сохраняет документ в формате Open Document
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Open Document
 //INPUT
-//  var XMLSS: TZEXMLSS                   - хранилище
-//      FileName: string                  - имя файла для сохранения
+//  var XMLSS: TZEXMLSS                   - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      FileName: string                  - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //RETURN
 //      integer
 function SaveXmlssToODFS(var XMLSS: TZEXMLSS; FileName: string): integer; overload;
@@ -5340,93 +5337,29 @@ begin
   result := SaveXmlssToODFS(XMLSS, FileName, [], []);
 end; //SaveXmlssToODFS
 
-{$ENDIF}
-
 function ExportXmlssToODFS(var XMLSS: TZEXMLSS; FileName: string; const SheetsNumbers: array of integer;
                            const SheetsNames: array of string; TextConverter: TAnsiToCPConverter; CodePageName: String;
                            BOM: ansistring = '';
-                           AllowUnzippedFolder: boolean = false; ZipGenerator: CZxZipGens = nil): integer; overload;
-var
-  _pages: TIntegerDynArray;      //номера страниц
-  _names: TStringDynArray;      //названия страниц
-  kol: integer;
-  Stream: TStream;
-  azg: TZxZipGen; // Actual Zip Generator
-  mime: AnsiString;
-  _WriteHelper: TZEODFWriteHelper;
-
+                           AllowUnzippedFolder: boolean = false): integer; overload;
 begin
-  Result := 0;
-  azg := nil;
-  _WriteHelper := nil;
-  try
-
-    if (not ZECheckTablesTitle(XMLSS, SheetsNumbers, SheetsNames, _pages, _names, kol)) then
-    begin
-      result := 2;
-      exit;
-    end;
-
-    _WriteHelper := TZEODFWriteHelper.Create(XMLSS, _pages, _names, kol);
-
-    // Todo - common block and exception const with XLSX output in zexlsx unit => need merge
-    if nil = ZipGenerator then begin
-      ZipGenerator := TZxZipGen.QueryZipGen;
-      if nil = ZipGenerator then
-        if AllowUnzippedFolder
-           then ZipGenerator := TZxZipGen.QueryDummyZipGen
-           else raise EZxZipGen.Create('No zip generators registered, folder output disabled.');
-           // result := 3 ????
-    end;
-    azg := ZipGenerator.Create(FileName);
-
-// этот файл долен быть первым
-// а еще он не должен был сжат! http://odf-validator.rhcloud.com/
-    Stream := azg.NewStream('mimetype');
-    mime := 'application/vnd.oasis.opendocument.spreadsheet';
-    Stream.WriteBuffer(mime[1], Length(mime));
-    azg.SealStream(Stream);
-
-    Stream := azg.NewStream('styles.xml');
-    ODFCreateStyles(XMLSS, Stream, _pages, _names, kol, TextConverter, CodePageName, BOM, _WriteHelper);
-    azg.SealStream(Stream);
-
-    Stream := azg.NewStream('content.xml');
-    ODFCreateContent(XMLSS, Stream, _pages, _names, kol, TextConverter, CodePageName, BOM, _WriteHelper);
-    azg.SealStream(Stream);
-
-    Stream := azg.NewStream('meta.xml');
-    ODFCreateMeta(XMLSS, Stream, TextConverter, CodePageName, BOM);
-    azg.SealStream(Stream);
-
-    Stream := azg.NewStream('settings.xml');
-    ODFCreateSettings(XMLSS, Stream, _pages, _names, kol, TextConverter, CodePageName, BOM);
-    azg.SealStream(Stream);
-
-    Stream := azg.NewStream('META-INF/manifest.xml');
-    ODFCreateManifest(Stream, TextConverter, CodePageName, BOM);
-    azg.SealStream(Stream);
-
-    azg.SaveAndSeal;
-  finally
-    ZESClearArrays(_pages, _names);
-    azg.Free;
-
-    if (Assigned(_WriteHelper)) then
-      FreeAndNil(_WriteHelper);
-  end;
+  if AllowUnzippedFolder then
+    Result := SaveXmlssToODFSPath(XMLSS, FileName, SheetsNumbers,
+      SheetsNames, TextConverter, CodePageName, BOM)
+  else
+    Result := SaveXmlssToODFS(XMLSS, FileName, SheetsNumbers,
+      SheetsNames, TextConverter, CodePageName, BOM);
 end; //ExportXmlssToODFS
 
 
-/////////////////// чтение
+/////////////////// пїЅпїЅпїЅпїЅпїЅпїЅ
 
-//Возвращает размер измерения в ММ
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ
 //INPUT
-//  const value: string     - строка со значением
-//  out RetSize: real       - возвращаемое значение
-//      isMultiply: boolean - флаг необходимости умножать значение с учётом единицы измерения
+//  const value: string     - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  out RetSize: real       - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      isMultiply: boolean - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //RETURN
-//      boolean - true - размер определён успешно
+//      boolean - true - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 function ODFGetValueSizeMM(const value: string; out RetSize: real; isMultiply: boolean = true): boolean;
 var
   i: integer;
@@ -5501,11 +5434,11 @@ begin
     result := false;
 end; //ODFGetValueSizeMM
 
-//Читает стиль ячейки
+//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 //INPUT
-//  var xml: TZsspXMLReaderH  - тэг-парсер
-//  var _style: TZSTyle       - прочитанный стиль
-//  var StyleProperties: TZEODFStyleProperties - условия для условного форматирования
+//  var xml: TZsspXMLReaderH  - пїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅ
+//  var _style: TZSTyle       - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+//  var StyleProperties: TZEODFStyleProperties - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 procedure ZEReadODFCellStyleItem(var xml: TZsspXMLReaderH; var _style: TZSTyle
                                 {$IFDEF ZUSE_CONDITIONAL_FORMATTING}; var StyleProperties: TZEODFStyleProperties{$ENDIF});
 var
@@ -5541,7 +5474,7 @@ begin
 
     if ((xml.TagName = 'style:table-cell-properties') and (xml.TagType in [4, 5])) then
     begin
-      //Выравнивание по вертикали
+      //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
       s := xml.Attributes.ItemsByName['style:vertical-align'];
       if (s > '') then
       begin
@@ -5561,7 +5494,7 @@ begin
       HAutoForced := 'value-type' = xml.Attributes['style:text-align-source'];
       If HAutoForced then _style.Alignment.Horizontal := ZHAutomatic;
 
-      //Угол поворота текста
+      //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
       s := xml.Attributes.ItemsByName['style:rotation-angle'];
       if (s > '') then begin
         if not TryStrToInt(s, t) // ODS 1.1 - pure integer - failed
@@ -5583,17 +5516,17 @@ begin
       _style.Alignment.VerticalText :=
            'ttb' = xml.Attributes['style:direction'];
 
-      //цвет фона
+      //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
       s := xml.Attributes.ItemsByName[ZETag_fo_background_color];
       if (s > '') then
         _style.BGColor := GetBGColorForODS(s);//HTMLHexToColor(s);
 
-      //подгонять ли, если текст не помещается
+      //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
       s := xml.Attributes.ItemsByName['style:shrink-to-fit'];
       if (s > '') then
         _style.Alignment.ShrinkToFit := ZEStrToBoolean(s);
 
-      ///обрамление
+      ///пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
       s := xml.Attributes.ItemsByName['fo:border'];
       if (s > '') then
       begin
@@ -5621,7 +5554,7 @@ begin
       if (s > '') then
         ZEStrToODFBorderStyle(s, _style.Border[5]);
 
-      //Перенос по словам (wrap no-wrap)
+      //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (wrap no-wrap)
       s := xml.Attributes.ItemsByName['fo:wrap-option'];
       if (s > '') then
         if (UpperCase(s) = 'WRAP') then
@@ -5687,7 +5620,7 @@ begin
         if (s = 'italic') then
           _style.Font.Style := _style.Font.Style + [fsItalic];
 
-      //цвет fo:color
+      //пїЅпїЅпїЅпїЅ fo:color
       s := xml.Attributes.ItemsByName[ZETag_fo_color];
       if (s > '') then
         _style.Font.Color := HTMLHexToColor(s);
@@ -5708,13 +5641,13 @@ begin
   end; //while
 end; //ZEReadODFCellStyleItem
 
-//Чтение стилей документа и автоматических стилей (составная часть стилей)
+//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
 //INPUT
-//  var XMLSS: TZEXMLSS - хранилище
-//      stream: TStream - поток для чтения
-//  var ReadHelper: TZEODFReadHelper - для хранения доп. инфы
+//  var XMLSS: TZEXMLSS - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      stream: TStream - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//  var ReadHelper: TZEODFReadHelper - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ. пїЅпїЅпїЅпїЅ
 //RETURN
-//      boolean - true - всё ок
+//      boolean - true - пїЅпїЅ пїЅпїЅ
 function ReadODFStyles(var XMLSS: TZEXMLSS; stream: TStream; var ReadHelper: TZEODFReadHelper): boolean;
 var
   xml: TZsspXMLReaderH;
@@ -5722,7 +5655,7 @@ var
   num: integer;
   s: string;
 
-  //Прочитать один стиль
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
   procedure _ReadOneStyle();
   var
     i: integer;
@@ -5752,7 +5685,7 @@ var
     end;
   end; //_ReadOneStyle
 
-  //Чтение стилей
+  //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   procedure _ReadStyles();
   begin
     while (not xml.Eof()) do
@@ -5762,7 +5695,7 @@ var
 
       if (xml.TagType = 4) then
       begin
-        //style:style - стиль
+        //style:style - пїЅпїЅпїЅпїЅпїЅ
         if (xml.TagName = ZETag_StyleStyle) then
           _ReadOneStyle()
         else
@@ -5782,11 +5715,11 @@ var
           ReadHelper.NumberStylesHelper.ReadKnownNumberFormat(xml);
       end; //if
 
-      //style:default-style - стиль по умолчанию
-      //number:number-style - числовой стиль
-      //number:currency-style - валютный стиль
-      //office:automatic-styles - автоматические стили
-      //office:master-styles - мастер страница
+      //style:default-style - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+      //number:number-style - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+      //number:currency-style - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+      //office:automatic-styles - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+      //office:master-styles - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     end; //while
   end; //_ReadStyles
 
@@ -5806,13 +5739,13 @@ begin
   end;
 end; //ReadODFStyles
 
-//Чтение содержимого документа ODS (content.xml)
+//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ODS (content.xml)
 //INPUT
-//  var XMLSS: TZEXMLSS - хранилище
-//      stream: TStream - поток для чтения
-//  var ReadHelper: TZEODFReadHelper - для хранения доп. инфы
+//  var XMLSS: TZEXMLSS - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      stream: TStream - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//  var ReadHelper: TZEODFReadHelper - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ. пїЅпїЅпїЅпїЅ
 //RETURN
-//      boolean - true - всё ок
+//      boolean - true - пїЅпїЅ пїЅпїЅ
 function ReadODFContent(var XMLSS: TZEXMLSS; stream: TStream; var ReadHelper: TZEODFReadHelper): boolean;
 var
   xml: TZsspXMLReaderH;
@@ -5828,8 +5761,8 @@ var
   _celltext: string;
   _Sheet: TZSheet;                      //Current reading sheet
   {$IFDEF ZUSE_CONDITIONAL_FORMATTING}
-  _RowDefaultStyleCFNumber: integer;    //Является ли стиль по умолчанию для ячейки в строке условным стилем
-  _CellStyleCFNumber: integer;          //Является ли стиль ячейки условным (номер в массиве)
+  _RowDefaultStyleCFNumber: integer;    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+  _CellStyleCFNumber: integer;          //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
   {$ENDIF}
 
   function IfTag(const TgName: string; const TgType: integer): boolean;
@@ -5837,12 +5770,12 @@ var
     result := (xml.TagType = TgType) and (xml.TagName = TgName);
   end;
 
-  //Ищет номер стиля по названию
+  //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   //INPUT
-  //  const st: string        - название стиля
-  //  out retCFIndex: integer - возвращает номер условного стиля в массиве,
-  //                            если < 0 - стиль не условный.
-  //                            Если >= StyleCount, то стиль в массиве ReadHelper.StylesProperties.
+  //  const st: string        - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+  //  out retCFIndex: integer - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ,
+  //                            пїЅпїЅпїЅпїЅ < 0 - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
+  //                            пїЅпїЅпїЅпїЅ >= StyleCount, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ReadHelper.StylesProperties.
   function _FindStyleID(const st: string {$IFDEF ZUSE_CONDITIONAL_FORMATTING};
                                          out retCFIndex: integer
                                          {$ENDIF}): integer;
@@ -5883,7 +5816,7 @@ var
     end;
   end; //_FindStyleID
 
-  //Автоматические стили
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
   procedure _ReadAutomaticStyle();
   var
     _stylefamily: string;
@@ -5892,7 +5825,7 @@ var
     _style: TZSTyle;
     _data_style_name: string;
 
-    //Чтение стиля для ячейки
+    //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     procedure _ReadCellStyle();
     var
       i: integer;
@@ -6063,16 +5996,16 @@ var
           _stylefamily := xml.Attributes.ItemsByName[ZETag_style_family];
           _stylename := xml.Attributes.ItemsByName[ZETag_Attr_StyleName];
 
-          if (_stylefamily = 'table-column') then //столбец
+          if (_stylefamily = 'table-column') then //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             _ReadTableColumnStyle()
           else
-          if (_stylefamily = 'table-row') then //строка
+          if (_stylefamily = 'table-row') then //пїЅпїЅпїЅпїЅпїЅпїЅ
             _ReadTableRowStyle()
           else
-          if (_stylefamily = 'table') then //таблица
+          if (_stylefamily = 'table') then //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             _ReadTableStyle()
           else
-          if (_stylefamily = 'table-cell') then //ячейка
+          if (_stylefamily = 'table-cell') then //пїЅпїЅпїЅпїЅпїЅпїЅ
             _ReadCellStyle();
         end
         else
@@ -6084,40 +6017,40 @@ var
     end;
   end; //_ReadAutomaticStyle
 
-  //Проверить кол-во строк
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
   procedure CheckRow(const PageNum: integer; const RowCount: integer);
   begin
     if XMLSS.Sheets[PageNum].RowCount < RowCount then
       XMLSS.Sheets[PageNum].RowCount := RowCount
   end;
 
-  //Проверить кол-во столбцов
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   procedure CheckCol(const PageNum: integer; const ColCount: integer);
   begin
     if XMLSS.Sheets[PageNum].ColCount < ColCount then
       XMLSS.Sheets[PageNum].ColCount := ColCount
   end;
 
-  //Чтение таблицы
+  //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   procedure _ReadTable();
   var
-    isRepeatRow: boolean;     //нужно ли повторять строку
-    isRepeatCell: boolean;    //нужно ли повторять ячейку
-    _RepeatRowCount: integer; //кол-во повторений строки
-    _RepeatCellCount: integer;//кол-во повторений ячейки
-    _CurrentRow, _CurrentCol: integer; //текущая строка/столбец
-    _CurrentPage: integer;    //текущая страница
+    isRepeatRow: boolean;     //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    isRepeatCell: boolean;    //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    _RepeatRowCount: integer; //пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    _RepeatCellCount: integer;//пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    _CurrentRow, _CurrentCol: integer; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    _CurrentPage: integer;    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     _MaxCol: integer;       
     s: string;                
     _CurrCell: TZCell;
     i, t: integer;
     _IsHaveTextInRow: boolean;
-    _RowDefaultStyleID: integer;  //ID стиля по-умолчанию в строке
+    _RowDefaultStyleID: integer;  //ID пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     {$IFDEF ZUSE_CONDITIONAL_FORMATTING}
     _tmpNum: integer;
     {$ENDIF}
 
-    //Повторить строку
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     procedure _RepeatRow();
     var
       i, j, n, z: integer;
@@ -6137,11 +6070,11 @@ var
         z := 1;
       ReadHelper.ConditionReader.ProgressLine(_CurrentRow - 1, z);
       {$ENDIF}
-      //Максимум строка может повторятся 2000 раз
+      //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 2000 пїЅпїЅпїЅ
       if ((isRepeatRow) and (_RepeatRowCount <= 2000)) then
       begin
-        //Если в строке небыло текста и её нужно повторить более 512 раз - уменьшаем кол-во
-        // до 512 раз
+        //пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 512 пїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ
+        // пїЅпїЅ 512 пїЅпїЅпїЅ
         if ((not _IsHaveTextInRow) and (_RepeatRowCount > 512)) then
           _RepeatRowCount := 512;
         n := _Sheet.ColCount - 1;
@@ -6156,7 +6089,7 @@ var
       end; //if
     end; //_RepeatRow
 
-    //Чтение ячейки
+    //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     procedure _ReadCell();
     var
       i: integer;
@@ -6179,7 +6112,7 @@ var
         if (not isRepeatCell) then
           _RepeatCellCount := 1;
 
-        //кол-во объединённых столбцов
+        //пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         s := xml.Attributes.ItemsByName['table:number-columns-spanned'];
         if (TryStrToInt(s, _numX)) then
           dec(_numX)
@@ -6187,7 +6120,7 @@ var
           _numX := 0;
         if (_numX < 0) then
           _numX := 0;
-        //Кол-во объединённых строк
+        //пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         s := xml.Attributes.ItemsByName['table:number-rows-spanned'];
         if (TryStrToInt(s, _numY)) then
           dec(_numY)
@@ -6202,11 +6135,11 @@ var
           _Sheet.MergeCells.AddRectXY(_CurrentCol, _CurrentRow, _CurrentCol + _numX, _CurrentRow + _numY);
         end;
 
-        //стиль ячейки
-        //TODO: Нужно разобраться с приоритетом. Если для ячейки не указан стиль,
-        //      какой стиль нужно брать раньше: стиль столбца или строки?
-        //      Пока пусть будет как для столбца. Или, может, если не указан стиль,
-        //      то ставить дефолтный (-1)?
+        //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        //TODO: пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ,
+        //      пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ?
+        //      пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ,
+        //      пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (-1)?
         s := xml.Attributes.ItemsByName[ZETag_table_style_name];
         _CurrCell.CellStyle := _Sheet.Columns[_CurrentCol].StyleID;
         {$IFDEF ZUSE_CONDITIONAL_FORMATTING}
@@ -6225,25 +6158,25 @@ var
         ReadHelper.ConditionReader.CheckCell(_CurrentCol, _CellStyleCFNumber, _RepeatCellCount);
         {$ENDIF}
 
-        //Проверка правильности наполнения
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         //*s := xml.Attributes.ItemsByName['table:cell-content-validation'];
-        //формула
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         _CurrCell.Formula := ZEReplaceEntity(xml.Attributes.ItemsByName['table:formula']);
-        //текущее числовое значение (для float | percentage | currency)
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ float | percentage | currency)
         //*s := xml.Attributes.ItemsByName['office:value'];
         {
-        //текущее значение даты
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         s := xml.Attributes.ItemsByName['office:date-value'];
-        //текущее значение времени
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         s := xml.Attributes.ItemsByName['office:time-value'];
-        //текущее логическое значение
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         s := xml.Attributes.ItemsByName['office:boolean-value'];
-        //текущая денежная единица
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         s := xml.Attributes.ItemsByName['tableoffice:currency'];
         }
-        //текущее строковое значение
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         //*s := xml.Attributes.ItemsByName['office:string-value'];
-        //Тип значения в ячейке
+        //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         s := xml.Attributes.ItemsByName['table:value-type'];
         if (s = '') then
           s := xml.Attributes.ItemsByName['office:value-type'];
@@ -6273,8 +6206,8 @@ var
             end;
         end; //case
 
-        //защищённость ячейки
-        s := xml.Attributes.ItemsByName['table:protected']; //{tut} надо будет добавить ещё один стиль
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        s := xml.Attributes.ItemsByName['table:protected']; //{tut} пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         //table:number-matrix-rows-spanned ??
         //table:number-matrix-columns-spanned ??
 
@@ -6289,7 +6222,7 @@ var
               break;
             xml.ReadTag();
 
-            //Текст ячейки
+            //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             if (IfTag(ZETag_text_p, 4)) then
             begin
               _IsHaveTextInRow := true;
@@ -6302,21 +6235,21 @@ var
                   break;
                 xml.ReadTag();
 
-                //text:a - ссылка
+                //text:a - пїЅпїЅпїЅпїЅпїЅпїЅ
                 if (IfTag('text:a', 4)) then
                 begin
                   _CurrCell.Href := xml.Attributes.ItemsByName['xlink:href'];
-                  //Дополнительные атрибуты: (пока игнорируются)
-                  //  office:name - название ссылки
-                  //  office:target-frame-name - фрэйм назначения
-                  //            _self   - документ по ссылке заменяет текущий
-                  //            _blank  - открывается в новом фрэйме
-                  //            _parent - открывается в родительском текущего
-                  //            _top    - самый верхний
-                  //            название_фрэйма
+                  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: (пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+                  //  office:name - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+                  //  office:target-frame-name - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                  //            _self   - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                  //            _blank  - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+                  //            _parent - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                  //            _top    - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                  //            пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ_пїЅпїЅпїЅпїЅпїЅпїЅ
                   //?? xlink:show - (new | replace)
-                  //  text:style-name - стиль непосещённой ссылки
-                  //  text:visited-style-name - стиль посещённой ссылки
+                  //  text:style-name - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+                  //  text:visited-style-name - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
                   s := '';
                   while (not IfTag('text:a', 6)) do
                   begin
@@ -6330,8 +6263,8 @@ var
                   _CurrCell.HRefScreenTip := s;
                 end; //if
 
-                //TODO: <text:span> - в будущем нужно будет как-то обрабатывать текст с
-                //      форматированием, сейчас игнорируем
+                //TODO: <text:span> - пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ
+                //      пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 _celltext := _celltext + xml.TextBeforeTag;
                 if ((xml.TagName <> ZETag_text_p) and (xml.TagName <> 'text:a') and (xml.TagName <> 'text:s') and
                     (xml.TagName <> 'text:span')) then
@@ -6340,7 +6273,7 @@ var
               _isnf := true;
             end; //if
 
-            //Комментарий к ячейке
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             if (IfTag('office:annotation', 4)) then
             begin
               s := xml.Attributes.ItemsByName['office:display'];
@@ -6356,9 +6289,9 @@ var
                 if (IfTag('dc:creator', 6)) then
                   _CurrCell.CommentAuthor := xml.TextBeforeTag;
 
-                //dc:date - дата комментария, пока игнорируется
+                //dc:date - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-                //Текст примечания
+                //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 if (IfTag(ZETag_text_p, 4)) then
                 begin
                   while (not IfTag(ZETag_text_p, 6)) do
@@ -6393,15 +6326,15 @@ var
           _isHaveTextCell := true;
         end;
 
-        //Если ячейку нужно повторить
+        //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (isRepeatCell) then
-          //Если в ячейке небыло текста и нужно повторить её более 255 раз - игнорируется повторение
+          //пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ 255 пїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
           if (_isHaveTextCell) or (_RepeatCellCount < 255) then
           begin
             CheckCol(_CurrentPage, _CurrentCol + _RepeatCellCount + 1);
             for i := 1 to _RepeatCellCount do
               _Sheet.Cell[_CurrentCol + i, _CurrentRow].Assign(_CurrCell);
-            //-1, т.к. нужно учитывать, что номер ячейки увеличивается на 1 каждый раз
+            //-1, пїЅ.пїЅ. пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 1 пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
             inc(_CurrentCol, _RepeatCellCount - 1);
           end;
 
@@ -6440,18 +6373,18 @@ var
         break;
       xml.ReadTag();
 
-      //Строка
+      //пїЅпїЅпїЅпїЅпїЅпїЅ
       if ((xml.TagName = 'table:table-row') and (xml.TagType in [4, 5])) then
       begin
         {$IFDEF ZUSE_CONDITIONAL_FORMATTING}
         ReadHelper.ConditionReader.ClearLine();
         {$ENDIF}
 
-        //кол-во повторений строки
+        //пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         s := xml.Attributes.ItemsByName['table:number-rows-repeated'];
         isRepeatRow := TryStrToInt(s, _RepeatRowCount);
         _IsHaveTextInRow := false;
-        //стиль строки
+        //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         s := xml.Attributes.ItemsByName[ZETag_table_style_name];
 
         if (s > '') then
@@ -6465,7 +6398,7 @@ var
               _Sheet.Rows[_CurrentRow].AutoFitHeight := ODFRowStyles[i].AutoHeight;
             end;
 
-        //стиль ячейки по умолчанию
+        //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         s := xml.Attributes.ItemsByName['table:default-cell-style-name'];
         if (Length(s) > 0) then
         begin
@@ -6479,7 +6412,7 @@ var
           {$ENDIF}
         end;
 
-        //Видимость: visible | collapse | filter
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: visible | collapse | filter
         s := xml.Attributes.ItemsByName['table:visibility'];
         if (s = 'collapse') then
           _Sheet.Rows[_CurrentRow].Hidden := true;
@@ -6500,7 +6433,7 @@ var
         _RepeatRow();
       end;
 
-      //Ширина строки
+      //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
       if ((xml.TagName = 'table:table-column') and (xml.TagType in [4, 5])) then
       begin
         CheckCol(_CurrentPage, _MaxCol + 1);
@@ -6533,7 +6466,7 @@ var
           if (TryStrToInt(s, t)) then
             if (t < 255) then
             begin
-              dec(t); //т.к. один столбец уже есть
+              dec(t); //пїЅ.пїЅ. пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
               CheckCol(_CurrentPage, _MaxCol + t + 1);
               for i := 1 to t do
               begin
@@ -6549,10 +6482,10 @@ var
         inc(_MaxCol);
       end; //if
 
-      //ячейка
+      //пїЅпїЅпїЅпїЅпїЅпїЅ
       _ReadCell();
 
-      // для LibreOffice >= 4.0 условное форматирование
+      // пїЅпїЅпїЅ LibreOffice >= 4.0 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
       {$IFDEF ZUSE_CONDITIONAL_FORMATTING}
       if (ifTag(const_calcext_conditional_formats, 4)) then
         ReadHelper.ConditionReader.ReadCalcextTag(xml, _CurrentPage);
@@ -6571,15 +6504,15 @@ var
       _Sheet.Columns[i].StyleID := -1;
   end; //_ReadTable
 
-  //считываем фильтр
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   procedure _ReadAutoFilter();
   var st:string;
   begin
-    //В ods область фильра задается через имя листа
-    //при этом есть два варианта:
-    // 1. "Лист1.A4:Лист1.C4" - если имя листа односложное
-    // 2. "'Лист №1'.A4:'Лист №1'.C4" - если имя листа сложное
-    // поэтому дважды вычищаем считанное значение
+    //пїЅ ods пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
+    // 1. "пїЅпїЅпїЅпїЅ1.A4:пїЅпїЅпїЅпїЅ1.C4" - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    // 2. "'пїЅпїЅпїЅпїЅ пїЅ1'.A4:'пїЅпїЅпїЅпїЅ пїЅ1'.C4" - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     st := xml.Attributes.ItemsByName['table:target-range-address'];
     {$IFDEF FPC_OR_DELPHI_UNICODE}
     st := ReplaceStr(st, #39 + _Sheet.Title + #39 + '.', '');
@@ -6606,7 +6539,7 @@ var
       if (ifTag('table:table', 4)) then
         _ReadTable();
 
-      //считываем фильтр
+      //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
       if (IfTag('table:database-range', 5)) then _ReadAutoFilter();
     end;
   end; //_ReadDocument
@@ -6650,12 +6583,12 @@ begin
   end;
 end; //ReadODFContent
 
-//Чтение настроек документа ODS (settings.xml)
+//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ODS (settings.xml)
 //INPUT
-//  var XMLSS: TZEXMLSS - хранилище
-//      stream: TStream - поток для чтения
+//  var XMLSS: TZEXMLSS - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//      stream: TStream - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 //RETURN
-//      boolean - true - всё ок
+//      boolean - true - пїЅпїЅ пїЅпїЅ
 function ReadODFSettings(var XMLSS: TZEXMLSS; stream: TStream): boolean;
 var
   xml: TZsspXMLReaderH;
@@ -6767,7 +6700,7 @@ var
     end; //while
   end; //_ReadSettings
 
-  //Проверка итема (не для листа)
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ)
   procedure _CheckConfigValue();
   begin
     _ConfigValue := ZEReplaceEntity(xml.TextBeforeTag);
@@ -6778,7 +6711,7 @@ var
     end;
   end; //_CheckOtherParams()
 
-  //<config:config-item>...</config:config-item> вне настроек листа
+  //<config:config-item>...</config:config-item> пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
   procedure _ReadConfigItem();
   begin
     _GetConfigTypeAndValue();
@@ -6822,12 +6755,12 @@ begin
   end;
 end; //ReadODFSettings
 
-//Читает распакованный ODS
+//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ODS
 //INPUT
-//  var XMLSS: TZEXMLSS - хранилище
-//  DirName: string     - имя папки
+//  var XMLSS: TZEXMLSS - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  DirName: string     - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 //RETURN
-//      integer - номер ошибки (0 - всё OK)
+//      integer - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (0 - пїЅпїЅ OK)
 function ReadODFSPath(var XMLSS: TZEXMLSS; DirName: string): integer;
 var
   stream: TStream;
@@ -6848,9 +6781,9 @@ begin
   ReadHelper := TZEODFReadHelper.Create(XMLSS);
 
   try
-    //манифест (META_INF/manifest.xml)
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (META_INF/manifest.xml)
 
-    //стили (styles.xml)
+    //пїЅпїЅпїЅпїЅпїЅ (styles.xml)
     try
       stream := TFileStream.Create(DirName + 'styles.xml', fmOpenRead or fmShareDenyNone);
     except
@@ -6861,7 +6794,7 @@ begin
       result := result or 2;
     FreeAndNil(stream);
 
-    //содержимое (content.xml)
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (content.xml)
     try
       stream := TFileStream.Create(DirName + 'content.xml', fmOpenRead or fmShareDenyNone);
     except
@@ -6872,9 +6805,9 @@ begin
       result := result or 2;
     FreeAndNil(stream);
 
-    //метаинформация (meta.xml)
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (meta.xml)
 
-    //настройки (settings.xml)
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (settings.xml)
     try
       stream := TFileStream.Create(DirName + 'settings.xml', fmOpenRead or fmShareDenyNone);
     except
@@ -6893,13 +6826,12 @@ begin
   end;
 end; //ReadODFPath
 
-{$IFDEF FPC}
-//Читает ODS
+//пїЅпїЅпїЅпїЅпїЅпїЅ ODS
 //INPUT
-//  var XMLSS: TZEXMLSS - хранилище
-//  FileName: string    - имя файла
+//  var XMLSS: TZEXMLSS - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//  FileName: string    - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 //RETURN
-//      integer - номер ошибки (0 - всё OK)
+//      integer - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (0 - пїЅпїЅ OK)
 function ReadODFS(var XMLSS: TZEXMLSS; FileName: string): integer;
 var
   u_zip: TUnZipper;
@@ -6926,26 +6858,26 @@ begin
     ZH.XMLSS := XMLSS;
     u_zip := TUnZipper.Create();
     u_zip.FileName := FileName;
-    u_zip.OnCreateStream := @ZH.DoCreateOutZipStream;
-    u_zip.OnDoneStream := @ZH.DoDoneOutZipStream;
+    u_zip.OnCreateStream := {$IFDEF FPC}@{$ENDIF}ZH.DoCreateOutZipStream;
+    u_zip.OnDoneStream := {$IFDEF FPC}@{$ENDIF}ZH.DoDoneOutZipStream;
 
     lst.Clear();
-    lst.Add('styles.xml'); //стили (styles.xml)
+    lst.Add('styles.xml'); //пїЅпїЅпїЅпїЅпїЅ (styles.xml)
     ZH.FileType := 2;
     u_zip.UnZipFiles(lst);
     result := result or ZH.RetCode;
 
     lst.Clear();
-    lst.Add('content.xml'); //содержимое
+    lst.Add('content.xml'); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     ZH.FileType := 0;
     u_zip.UnZipFiles(lst);
     result := result or ZH.RetCode;
 
-    //метаинформация (meta.xml)
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (meta.xml)
 
-    //настройки (settings.xml)
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (settings.xml)
     lst.Clear();
-    lst.Add('settings.xml'); //настройки
+    lst.Add('settings.xml'); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     ZH.FileType := 1;
     u_zip.UnZipFiles(lst);
 
@@ -6960,7 +6892,6 @@ begin
       FreeAndNil(lst);
   end;
 end; //ReadODFS
-{$ENDIF} //FPC
 
 //Get MediaType by string (from manifest.xml)
 //INPUT
@@ -6999,9 +6930,5 @@ begin
       break;
     end;
 end;
-
-{$IFNDEF FPC}
-{$I odszipfuncimpl.inc}
-{$ENDIF}
 
 end.
