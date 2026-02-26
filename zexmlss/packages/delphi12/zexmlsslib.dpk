@@ -39,6 +39,7 @@ contains
   zearchhelper in '..\..\src\zearchhelper.pas',
   zexlsx in '..\..\src\zexlsx.pas',
   zenumberformats in '..\..\src\zenumberformats.pas',
-  zeZipper in '..\..\src\zeZipper.pas';
+  zeZipper in '..\..\src\zeZipper.pas',
+  duansistr in '..\..\src\duansistr.pas';
 
 end.
