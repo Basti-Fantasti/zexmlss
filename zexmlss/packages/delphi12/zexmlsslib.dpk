@@ -38,6 +38,7 @@ contains
   zexmlssutils in '..\..\src\zexmlssutils.pas',
   zearchhelper in '..\..\src\zearchhelper.pas',
   zexlsx in '..\..\src\zexlsx.pas',
-  zenumberformats in '..\..\src\zenumberformats.pas';
+  zenumberformats in '..\..\src\zenumberformats.pas',
+  zeZipper in '..\..\src\zeZipper.pas';
 
 end.
