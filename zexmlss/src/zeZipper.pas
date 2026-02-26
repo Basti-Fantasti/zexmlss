@@ -14,10 +14,6 @@ interface
 uses
   Classes, SysUtils
   {$ifdef XE2ZIP}, System.Zip{$endif}
-  {$ifdef KAZIP}, KAZip{$endif}
-  {$ifdef JCL7Z}, JclCompression{$endif}
-  {$ifdef ABZIP}, AbZipper, AbUnzper, AbArcTyp, AbUtils{$endif}
-  {$ifdef SCIZIP}, SciZipFile{$endif}
   ;
 
 type
@@ -127,10 +123,6 @@ type
     FOnStartFile    : TOnStartFileEvent;
     function CheckEntries: Integer;
     procedure SetEntries(const AValue: TZipFileEntries);
-    {$ifdef KAZIP}procedure BuildZipDirectoryKaZip();{$endif}
-    {$ifdef JCL7Z}procedure BuildZipDirectoryJCL7Z();{$endif}
-    {$ifdef ABZIP}procedure BuildZipDirectoryAbZip();{$endif}
-    {$ifdef SCIZIP}procedure BuildZipDirectorySciZip();{$endif}
     {$ifdef XE2ZIP}procedure BuildZipDirectoryXE2Zip();{$endif}
   protected
     //Builds central directory based on local headers
@@ -188,8 +180,6 @@ type
     FOnProgress : TProgressEvent;
     FOnEndOfFile : TOnEndOfFileEvent;
     FOnStartFile : TOnStartFileEvent;
-    {$ifdef KAZIP}procedure ReadKaZip(AExtract: Boolean);{$endif}
-    {$ifdef JCL7Z}procedure ReadJCL7Z(AExtract: Boolean);{$endif}
     {$ifdef XE2ZIP}procedure ReadXE2Zip(AExtract: Boolean);{$endif}
   protected
     procedure ReadZip(AExtract: Boolean);
@@ -427,19 +417,11 @@ end;
 
 procedure TZipper.BuildZipDirectory;
 begin
-{$if Defined(XE2ZIP)}
+{$ifdef XE2ZIP}
   BuildZipDirectoryXE2Zip();
-{$elseif Defined(KAZIP)}
-  BuildZipDirectoryKaZip();
-{$elseif Defined(JCL7Z)}
-  BuildZipDirectoryJCL7Z();
-{$elseif Defined(ABZIP)}
-  BuildZipDirectoryAbZip();
-{$elseif Defined(SCIZIP)}
-  BuildZipDirectorySciZip();
 {$else}
-  raise EZipError.Create(SErrNoCompressor);
-{$ifend}
+  {$MESSAGE Error 'No zip backend. Requires Delphi XE2 or later.'}
+{$endif}
 end;
 
 function TZipper.CheckEntries: Integer;
@@ -571,165 +553,6 @@ begin
   ZipAllFiles();
 end;
 
-{$ifdef KAZIP}
-procedure TZipper.BuildZipDirectoryKaZip();
-var
-  zip: TKaZip;
-  i: Integer;
-  Item: TZipFileEntry;
-begin
-  zip := TKaZip.Create(nil);
-  try
-    zip.CreateZip(FileName);
-    zip.Open(FileName);
-    zip.StoreFolders := False;
-    for i := 0 to Entries.Count-1 do
-    begin
-      Item := Entries[i];
-      if Assigned(Item.Stream) then
-      begin
-        Item.Stream.Position := 0;
-        zip.AddStream(Item.ArchiveFileName, Item.Stream);
-      end
-      else
-      begin
-        zip.AddFile(Item.DiskFileName, Item.ArchiveFileName);
-      end;
-    end;
-    zip.Close();
-  finally
-    zip.Free();
-  end;
-end;
-{$endif}
-
-{$ifdef JCL7Z}
-procedure TZipper.BuildZipDirectoryJCL7Z();
-var
-  zip: TJclZipCompressArchive;
-  i: Integer;
-  Item: TZipFileEntry;
-begin
-  zip := TJclZipCompressArchive.Create(FileName);
-  try
-    for i := 0 to Entries.Count-1 do
-    begin
-      Item := Entries[i];
-      if Assigned(Item.Stream) then
-      begin
-        Item.Stream.Position := 0;
-        zip.AddFile(Item.ArchiveFileName, Item.Stream, False);
-      end
-      else
-      begin
-        zip.AddFile(Item.ArchiveFileName, Item.DiskFileName);
-      end;
-    end;
-    zip.Compress();
-  finally
-    FreeAndNil(zip);
-  end;
-end;
-{$endif}
-
-{$ifdef ABZIP}
-procedure TZipper.BuildZipDirectoryAbZip();
-var
-  zip: TAbZipper;
-  i: Integer;
-  Item: TZipFileEntry;
-  TmpStream: TFileStream;
-begin
-  zip := TAbZipper.Create(nil);
-  try
-    zip.ArchiveType := atZip;
-    zip.ForceType := True;
-    zip.FileName := FileName;
-    //zip.BaseDirectory := FTmpZipFolder;
-    zip.StoreOptions := [soRecurse];
-    //zip.AddFiles('*', faAnyFile);
-    for i := 0 to Entries.Count-1 do
-    begin
-      Item := Entries[i];
-      if Assigned(Item.Stream) then
-      begin
-        Item.Stream.Position := 0;
-        zip.AddFromStream(Item.ArchiveFileName, Item.Stream);
-      end
-      else
-      begin
-        TmpStream := TFileStream.Create(Item.DiskFileName, fmOpenRead);
-        try
-          zip.AddFromStream(Item.ArchiveFileName, TmpStream);
-        finally
-          TmpStream.Free();
-        end;
-      end;
-    end;
-    zip.Save();
-    zip.CloseArchive();
-  finally
-    zip.Free();
-  end;
-end;
-{$endif}
-
-
-{$ifdef SCIZIP}
-procedure TZipper.BuildZipDirectorySciZip();
-var
-  zip: TZipFile;
-  i: integer;
-  s: string;
-  sl: TStringList;
-  stream: TFileStream;
-  buffer: AnsiString;
-  Item: TZipFileEntry;
-begin
-  s := ExtractFilePath(FileName);
-  if not ForceDirectories(s) then
-  begin
-    Exit;
-  end;
-
-  zip := TZipFile.Create;
-  try
-    for i := 0 to Entries.Count-1 do
-    begin
-      Item := Entries[i];
-      if Assigned(Item.Stream) then
-      begin
-        if Item.Stream.Size = 0 then
-          Continue;
-        zip.AddFile(AnsiString(Item.ArchiveFileName));
-        Item.Stream.Position := 0;
-        SetLength(buffer, Item.Stream.Size);
-        Item.Stream.ReadBuffer(buffer[1], Item.Stream.Size);
-        zip.Data[zip.Count - 1] := buffer;
-      end
-      else
-      begin
-        TmpStream := TFileStream.Create(Item.DiskFileName, fmOpenRead);
-        try
-          zip.AddFile(AnsiString(Item.ArchiveFileName));
-          TmpStream.Position := 0;
-          SetLength(buffer, TmpStream.Size);
-          TmpStream.ReadBuffer(buffer[1], TmpStream.Size);
-          zip.Data[zip.Count - 1] := buffer;
-        finally
-          TmpStream.Free();
-        end;
-      end;
-    end;
-
-    zip.SaveToFile(FileName);
-  finally
-    zip.Free;
-  end;
-end;
-{$endif}
-
-
 {$ifdef XE2ZIP}
 procedure TZipper.BuildZipDirectoryXE2Zip();
 var
@@ -854,100 +677,15 @@ begin
   FUnZipping := True;
   try
     Entries.Clear();
-    {$if Defined(XE2ZIP)}
+    {$ifdef XE2ZIP}
     ReadXE2Zip(AExtract);
-    {$elseif Defined(KAZIP)}
-    ReadKaZip(AExtract);
-    {$elseif Defined(JCL7Z)}
-    ReadJCL7Z(AExtract);
-    {$elseif Defined(ABZIP)}
-    ReadAbZip(AExtract);
-    {$elseif Defined(SCIZIP)}
-    ReadSciZip(AExtract);
     {$else}
-    raise EZipError.Create(SErrNoCompressor);
-    {$ifend}
+    {$MESSAGE Error 'No zip backend. Requires Delphi XE2 or later.'}
+    {$endif}
   finally
     FUnZipping := False;
   end;
 end;
-
-{$ifdef KAZIP}
-procedure TUnZipper.ReadKaZip(AExtract: Boolean);
-var
-  zip: TKaZip;
-  i: Integer;
-  Item: TZipFileEntry;
-  ZipItem: TKAZipEntriesEntry;
-  TmpStream: TStream;
-begin
-  zip := TKaZip.Create(nil);
-  try
-    zip.Open(FileName);
-    for i := 0 to zip.Entries.Count-1 do
-    begin
-      ZipItem := zip.Entries.Items[i];
-
-      Item := Entries.AddFileEntry('', ZipItem.FileName);
-      if AExtract and ((FFiles.Count = 0) or (FFiles.IndexOf(Item.ArchiveFileName) <> -1)) then
-      begin
-        if Assigned(OnCreateStream) and Assigned(OnDoneStream) then
-        begin
-          OnCreateStream(Self, TmpStream, (Item as TFullZipFileEntry));
-          try
-            zip.ExtractToStream(ZipItem, TmpStream);
-          finally
-            OnDoneStream(Self, TmpStream, (Item as TFullZipFileEntry));
-          end;
-        end;
-      end;
-    end;
-    zip.Close();
-  finally
-    zip.Free();
-  end;
-end;
-{$endif}
-
-{$ifdef JCL7Z}
-procedure TUnZipper.ReadJCL7Z(AExtract: Boolean);
-var
-  zip: TJclZipDecompressArchive;
-  i: Integer;
-  Item: TZipFileEntry;
-  ZipItem: TJclCompressionItem;
-  TmpStream: TStream;
-begin
-  zip := TJclZipDecompressArchive.Create(FileName);
-  try
-    zip.ListFiles();
-    for i := 0 to zip.ItemCount-1 do
-    begin
-      ZipItem := zip.Items[i];
-
-      Item := Entries.AddFileEntry('', ZipItem.PackedName);
-      if AExtract and ((FFiles.Count = 0) or (FFiles.IndexOf(Item.ArchiveFileName) <> -1)) then
-      begin
-        if Assigned(OnCreateStream) and Assigned(OnDoneStream) then
-        begin
-          OnCreateStream(Self, TmpStream, (Item as TFullZipFileEntry));
-          try
-            ZipItem.Stream := TmpStream;
-            ZipItem.Selected := True;
-            zip.ExtractSelected();
-            ZipItem.Stream := nil;
-            ZipItem.Selected := False;
-          finally
-            OnDoneStream(Self, TmpStream, (Item as TFullZipFileEntry));
-          end;
-        end;
-      end;
-    end;
-  finally
-    zip.Free();
-  end;
-end;
-{$endif}
 
 {$ifdef XE2ZIP}
 procedure TUnZipper.ReadXE2Zip(AExtract: Boolean);
