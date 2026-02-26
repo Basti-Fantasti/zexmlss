@@ -562,7 +562,7 @@ var
   Item: TZipFileEntry;
 begin
   s := ExtractFilePath(FileName);
-  if (not ForceDirectories(s)) then
+  if (s <> '') and (not ForceDirectories(s)) then
     Exit;
 
   zip := TZipFile.Create();
