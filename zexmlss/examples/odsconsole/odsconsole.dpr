@@ -5,6 +5,7 @@ program odsconsole;
 uses
   SysUtils,
   u_odsexport in 'u_odsexport.pas',
+  JsonDataObjects in '..\..\..\..\..\dmvcframework\sources\JsonDataObjects.pas',
   zexmlss in '..\..\src\zexmlss.pas',
   zsspxml in '..\..\src\zsspxml.pas',
   zeodfs in '..\..\src\zeodfs.pas',
@@ -19,9 +20,33 @@ uses
 begin
   try
     WriteLn('zexmlss ODS export console example');
-    WriteLn('Generating response.ods...');
-    GenerateODS('response.ods');
-    WriteLn('Done. File saved to: ', ExpandFileName('response.ods'));
+
+    if ParamCount < 1 then
+    begin
+      WriteLn('Usage: odsconsole <input.json> [output.ods]');
+      WriteLn;
+      WriteLn('  <input.json>   Path to JSON file with participant data');
+      WriteLn('  [output.ods]   Output ODS file (default: response.ods)');
+      ExitCode := 1;
+      Exit;
+    end;
+
+    if not FileExists(ParamStr(1)) then
+    begin
+      WriteLn('Error: File not found: ', ParamStr(1));
+      ExitCode := 1;
+      Exit;
+    end;
+
+    if ParamCount >= 2 then
+      GenerateODS(ParamStr(1), ParamStr(2))
+    else
+      GenerateODS(ParamStr(1), 'response.ods');
+
+    if ParamCount >= 2 then
+      WriteLn('Done. File saved to: ', ExpandFileName(ParamStr(2)))
+    else
+      WriteLn('Done. File saved to: ', ExpandFileName('response.ods'));
   except
     on E: Exception do
     begin
