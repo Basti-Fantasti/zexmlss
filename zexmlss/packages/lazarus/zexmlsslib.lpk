@@ -23,7 +23,7 @@
 (Write and read ODS, xlsx and excel xml spreadsheet formats). More info: http://avemey.com/zexmlss/index.php "/>
     <License Value="zlib"/>
     <Version Release="15"/>
-    <Files Count="15">
+    <Files Count="9">
       <Item1>
         <Filename Value="..\..\src\zexmlss.pas"/>
         <HasRegisterProc Value="True"/>
@@ -50,41 +50,17 @@
         <UnitName Value="zesavecommon"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\src\zeSave.pas"/>
-        <UnitName Value="zeSave"/>
-      </Item7>
-      <Item8>
-        <Filename Value="..\..\src\zeSaveEXML.pas"/>
-        <UnitName Value="zeSaveEXML"/>
-      </Item8>
-      <Item9>
-        <Filename Value="..\..\src\zeSaveODS.pas"/>
-        <UnitName Value="zeSaveODS"/>
-      </Item9>
-      <Item10>
-        <Filename Value="..\..\src\zeSaveXLSX.pas"/>
-        <UnitName Value="zeSaveXLSX"/>
-      </Item10>
-      <Item11>
-        <Filename Value="..\..\src\zeZippy.pas"/>
-        <UnitName Value="zeZippy"/>
-      </Item11>
-      <Item12>
-        <Filename Value="..\..\src\zeZippyLazip.pp"/>
-        <UnitName Value="zeZippyLazip"/>
-      </Item12>
-      <Item13>
         <Filename Value="..\..\src\zexlsx.pas"/>
         <UnitName Value="zexlsx"/>
-      </Item13>
-      <Item14>
+      </Item7>
+      <Item8>
         <Filename Value="..\..\src\zearchhelper.pas"/>
         <UnitName Value="zearchhelper"/>
-      </Item14>
-      <Item15>
+      </Item8>
+      <Item9>
         <Filename Value="..\..\src\zenumberformats.pas"/>
         <UnitName Value="zenumberformats"/>
-      </Item15>
+      </Item9>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>
