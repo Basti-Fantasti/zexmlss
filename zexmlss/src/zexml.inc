@@ -1,52 +1,36 @@
 // If not using ZColorStringGrid
-// Если не используется ZColorStringGrid 
+// пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ZColorStringGrid 
 {$DEFINE NOZCOLORSTRINGGRID}
 
 // Conditional formatting
-// Условное форматирование
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 {$DEFINE ZUSE_CONDITIONAL_FORMATTING}
 
-// Компактная запись XML, без отступов и переводов строк
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ XML, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 // Compact XML without indents and newlines
 {$DEFINE NOXMLINDENTS}
 
 // Charts
-// Графики
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 {$DEFINE ZUSE_CHARTS}
 
 // Drawings
-// Рисунки
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 {$DEFINE ZUSE_DRAWINGS}
 
 // Archivers for Delphi, not used for Free Pascal / Lazarus
-// Архиваторы для Delphi, не используются для Free Pascal / Lazarus
-{ use Delphi XE2 and above }
+{ use Delphi XE2 and above - System.Zip }
 {$ifndef FPC}
 {$if CompilerVersion >= 23.0}         // bds xe2 (2012)
   {$define XE2ZIP}
 {$ifend}
 {$endif}
 
-{ use KaZip (recommended) ) }
-{$define KAZIP}
-
-{ use JEDI Code Library (via 7z) }
-{//$define JCL7Z}
-
-{ use TurboPower Abbrevia }
-{//$define ABZIP}
-
-{ use SciZipFile }
-{//$define SCIZIP}
-
-{ use Synopse }
-{//$define SYNZIP}
-
 // Free Pascal / Lazarus
 {$IFDEF FPC}
-  //для FPC пока нету ZColorStringGrid-а
+  //пїЅпїЅпїЅ FPC пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ ZColorStringGrid-пїЅ
   {$DEFINE NOZCOLORSTRINGGRID}
-  //Если хотим использовать модуль перекодировки LConvEncoding.pas
+  //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ LConvEncoding.pas
   {$DEFINE USELCONVENCODING}
 {$ELSE}
   {$UNDEF USELCONVENCODING}
